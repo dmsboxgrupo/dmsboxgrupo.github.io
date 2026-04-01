@@ -1,0 +1,2512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LORAM — Liderando a Transformação Digital da Manutenção Ferroviária</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (LORAM BRAND)
+           =========================================== */
+        :root {
+            --loram-red: #af2024;
+            --loram-red-hover: #b73639;
+            --loram-red-dark: #8a191c;
+            --loram-dark: #323232;
+            --loram-darker: #1a1a1a;
+            --loram-white: #ffffff;
+            --loram-gray: #9ca3af;
+            --loram-light-gray: #e5e7eb;
+
+            --font-display: 'Roboto Condensed', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+
+            --title-size: clamp(1.8rem, 5vw, 4rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.8rem);
+            --h3-size: clamp(1rem, 2.5vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+            --small-size: clamp(0.65rem, 1vw, 0.875rem);
+
+            --slide-padding: clamp(1rem, 4vw, 4rem);
+            --content-gap: clamp(0.5rem, 2vw, 2rem);
+            --element-gap: clamp(0.25rem, 1vw, 1rem);
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-normal: 0.6s;
+            --duration-slow: 1s;
+        }
+
+        /* ===========================================
+           VIEWPORT BASE (MANDATORY)
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            font-family: var(--font-body);
+            background: var(--loram-darker);
+            color: var(--loram-white);
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        img { max-width: 100%; object-fit: contain; }
+
+        /* ===========================================
+           RESPONSIVE BREAKPOINTS
+           =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 3vw, 1.75rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            }
+            .nav-dots, .keyboard-hint, .decorative { display: none; }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.4rem, 2vw, 1rem);
+                --title-size: clamp(1rem, 3.5vw, 1.5rem);
+                --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+        }
+
+        @media (max-width: 600px) {
+            :root { --title-size: clamp(1.25rem, 7vw, 2.5rem); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* ===========================================
+           ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.85);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .reveal-blur {
+            opacity: 0;
+            filter: blur(12px);
+            transition: opacity 0.8s var(--ease-out-expo),
+                        filter 0.8s var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal,
+        .slide.visible .reveal-left,
+        .slide.visible .reveal-right,
+        .slide.visible .reveal-scale,
+        .slide.visible .reveal-blur {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+            filter: blur(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .reveal:nth-child(3) { transition-delay: 0.3s; }
+        .reveal:nth-child(4) { transition-delay: 0.4s; }
+        .reveal:nth-child(5) { transition-delay: 0.5s; }
+
+        /* ===========================================
+           LANGUAGE TOGGLE
+           =========================================== */
+        .lang-toggle {
+            position: fixed;
+            top: clamp(0.75rem, 2vw, 1.25rem);
+            right: clamp(0.75rem, 2vw, 1.25rem);
+            z-index: 9999;
+            display: flex;
+            gap: 0;
+            background: rgba(26, 26, 26, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .lang-toggle button {
+            background: transparent;
+            border: none;
+            color: var(--loram-gray);
+            font-family: var(--font-body);
+            font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+            font-weight: 500;
+            padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.6rem, 1.2vw, 1rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .lang-toggle button:hover {
+            color: var(--loram-white);
+            background: rgba(175, 32, 36, 0.3);
+        }
+        .lang-toggle button.active {
+            background: var(--loram-red);
+            color: var(--loram-white);
+        }
+
+        /* ===========================================
+           PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--loram-red), var(--loram-red-hover));
+            z-index: 9998;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(175, 32, 36, 0.5);
+        }
+
+        /* ===========================================
+           NAVIGATION DOTS
+           =========================================== */
+        .nav-dots {
+            position: fixed;
+            right: clamp(0.5rem, 1.5vw, 1.25rem);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9997;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, 1vh, 12px);
+        }
+        .nav-dot {
+            width: clamp(8px, 1vw, 12px);
+            height: clamp(8px, 1vw, 12px);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+        .nav-dot:hover {
+            background: rgba(175, 32, 36, 0.5);
+            border-color: var(--loram-red);
+            transform: scale(1.3);
+        }
+        .nav-dot.active {
+            background: var(--loram-red);
+            border-color: var(--loram-red);
+            transform: scale(1.2);
+            box-shadow: 0 0 8px rgba(175, 32, 36, 0.6);
+        }
+
+        /* ===========================================
+           OVERVIEW MODE
+           =========================================== */
+        body.overview-mode {
+            overflow: auto !important;
+        }
+        body.overview-mode html {
+            scroll-snap-type: none !important;
+        }
+        body.overview-mode .slide {
+            height: auto !important;
+            min-height: 200px;
+            max-height: 250px;
+            scroll-snap-align: none;
+            margin: 10px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            width: calc(33.33% - 20px);
+            vertical-align: top;
+        }
+        body.overview-mode .slide:hover {
+            border-color: var(--loram-red);
+            transform: scale(0.98);
+        }
+        body.overview-mode .slide.current-overview {
+            border-color: var(--loram-red);
+            box-shadow: 0 0 20px rgba(175, 32, 36, 0.4);
+        }
+        body.overview-mode .nav-dots,
+        body.overview-mode .progress-bar,
+        body.overview-mode .lang-toggle { display: none; }
+
+        .overview-label {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--loram-white);
+            background: rgba(26,26,26,0.9);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            z-index: 99999;
+            pointer-events: none;
+        }
+
+        /* ===========================================
+           SLIDE 1 — HERO
+           =========================================== */
+        .hero-slide {
+            background: var(--loram-darker);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(26,26,26,0.92) 0%, rgba(50,50,50,0.7) 50%, rgba(175,32,36,0.3) 100%),
+                url('https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=1920&q=80') center/cover no-repeat;
+            transform: scale(1.05);
+            transition: transform 8s ease;
+        }
+        .slide.visible .hero-bg {
+            transform: scale(1);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(26,26,26,0.4) 0%, rgba(26,26,26,0.9) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: var(--content-gap);
+            height: 100%;
+            padding: var(--slide-padding);
+        }
+        .hero-logo {
+            width: clamp(180px, 25vw, 320px);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: heroLogoIn 1.2s var(--ease-out-expo) 0.3s forwards;
+        }
+        @keyframes heroLogoIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-tagline {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.1;
+            max-width: 800px;
+            opacity: 0;
+            animation: fadeSlideUp 1s var(--ease-out-expo) 0.8s forwards;
+        }
+        .hero-subtitle {
+            font-size: var(--body-size);
+            color: var(--loram-gray);
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeSlideUp 1s var(--ease-out-expo) 1.1s forwards;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--loram-red);
+            color: var(--loram-white);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: var(--body-size);
+            padding: clamp(0.6rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2.5rem);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeSlideUp 1s var(--ease-out-expo) 1.4s forwards;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .hero-cta:hover {
+            background: var(--loram-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(175, 32, 36, 0.4);
+        }
+        .hero-cta .arrow {
+            transition: transform 0.3s;
+        }
+        .hero-cta:hover .arrow {
+            transform: translateX(4px);
+        }
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Red accent line at bottom */
+        .hero-accent-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--loram-red), transparent);
+            opacity: 0;
+            animation: fadeIn 1.5s ease 2s forwards;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: clamp(1rem, 3vh, 2rem);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 1s var(--ease-out-expo) 2s forwards;
+        }
+        .scroll-indicator span {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+        }
+        .scroll-mouse {
+            width: 24px;
+            height: 38px;
+            border: 2px solid var(--loram-gray);
+            border-radius: 12px;
+            position: relative;
+        }
+        .scroll-mouse::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--loram-red);
+            border-radius: 2px;
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            50% { transform: translateX(-50%) translateY(12px); opacity: 0.3; }
+        }
+
+        /* ===========================================
+           SLIDE 2 — TIMELINE
+           =========================================== */
+        .timeline-slide {
+            background: var(--loram-dark);
+        }
+        .timeline-slide .slide-content {
+            align-items: center;
+            gap: var(--content-gap);
+        }
+        .timeline-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            text-align: center;
+        }
+        .timeline-container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(0.5rem, 1.5vh, 1.5rem);
+        }
+        .timeline-track {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            padding: 0 clamp(0.5rem, 2vw, 2rem);
+        }
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: clamp(0.5rem, 2vw, 2rem);
+            right: clamp(0.5rem, 2vw, 2rem);
+            height: 3px;
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-50%);
+        }
+        .timeline-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--loram-red-dark), var(--loram-red), var(--loram-red-hover));
+            width: 0%;
+            transition: width 1.5s var(--ease-out-expo);
+            border-radius: 2px;
+        }
+        .slide.visible .timeline-line-fill {
+            width: 100%;
+        }
+        .timeline-point {
+            width: clamp(36px, 5vw, 52px);
+            height: clamp(36px, 5vw, 52px);
+            border-radius: 50%;
+            background: var(--loram-dark);
+            border: 3px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(0.55rem, 1.1vw, 0.8rem);
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s var(--ease-spring);
+        }
+        .timeline-point:hover,
+        .timeline-point.active {
+            border-color: var(--loram-red);
+            background: var(--loram-red);
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(175, 32, 36, 0.5);
+        }
+        .timeline-info {
+            background: rgba(26,26,26,0.95);
+            border: 1px solid rgba(175, 32, 36, 0.3);
+            border-radius: 12px;
+            padding: clamp(0.75rem, 2vw, 1.5rem);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            min-height: clamp(60px, 10vh, 100px);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+        .timeline-info h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            color: var(--loram-red);
+            margin-bottom: 0.3rem;
+        }
+        .timeline-info p {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            line-height: 1.5;
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: flex;
+            gap: clamp(1rem, 3vw, 3rem);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--loram-red);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            margin-top: 0.2rem;
+        }
+
+        /* Mini world map */
+        .world-map-container {
+            width: 100%;
+            max-width: 700px;
+            aspect-ratio: 2/1;
+            max-height: min(25vh, 200px);
+            position: relative;
+        }
+        .map-dot {
+            position: absolute;
+            width: clamp(8px, 1.2vw, 14px);
+            height: clamp(8px, 1.2vw, 14px);
+            background: var(--loram-red);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .map-dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--loram-red);
+            opacity: 0;
+            animation: mapPulse 2s ease-in-out infinite;
+        }
+        @keyframes mapPulse {
+            0%, 100% { opacity: 0; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.8); }
+        }
+        .map-dot:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 15px rgba(175, 32, 36, 0.6);
+        }
+        .map-dot .map-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26,26,26,0.95);
+            color: var(--loram-white);
+            font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border: 1px solid rgba(175,32,36,0.3);
+        }
+        .map-dot:hover .map-tooltip { opacity: 1; }
+
+        /* ===========================================
+           SLIDE 3 — SOLUTIONS
+           =========================================== */
+        .solutions-slide {
+            background:
+                radial-gradient(ellipse at 80% 20%, rgba(175, 32, 36, 0.08) 0%, transparent 50%),
+                var(--loram-darker);
+        }
+        .solutions-slide .slide-content {
+            align-items: center;
+            gap: var(--content-gap);
+        }
+        .solutions-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            text-align: center;
+        }
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 1.5vw, 1.25rem);
+            width: 100%;
+            max-width: 1000px;
+        }
+        @media (max-width: 768px) {
+            .solutions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .solution-card {
+            background: rgba(50, 50, 50, 0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: clamp(0.75rem, 2vw, 1.5rem);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: clamp(0.3rem, 0.8vw, 0.6rem);
+            position: relative;
+            overflow: hidden;
+        }
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--loram-red);
+            transform: scaleX(0);
+            transition: transform 0.4s var(--ease-out-expo);
+        }
+        .solution-card:hover::before,
+        .solution-card.expanded::before {
+            transform: scaleX(1);
+        }
+        .solution-card:hover {
+            background: rgba(50, 50, 50, 0.8);
+            border-color: rgba(175, 32, 36, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+        .solution-icon {
+            width: clamp(36px, 5vw, 56px);
+            height: clamp(36px, 5vw, 56px);
+            background: linear-gradient(135deg, var(--loram-red), var(--loram-red-hover));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            flex-shrink: 0;
+        }
+        .solution-card h3 {
+            font-family: var(--font-display);
+            font-size: clamp(0.75rem, 1.3vw, 1rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .solution-card p {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            line-height: 1.4;
+        }
+        .solution-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--ease-out-expo);
+            width: 100%;
+        }
+        .solution-card.expanded .solution-details {
+            max-height: 200px;
+        }
+        .solution-details ul {
+            list-style: none;
+            padding: 0.5rem 0 0;
+            text-align: left;
+        }
+        .solution-details li {
+            font-size: var(--small-size);
+            color: var(--loram-light-gray);
+            padding: 0.15rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .solution-details li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--loram-red);
+        }
+
+        /* Stagger animation for cards */
+        .solution-card:nth-child(1) { transition-delay: 0.1s; }
+        .solution-card:nth-child(2) { transition-delay: 0.2s; }
+        .solution-card:nth-child(3) { transition-delay: 0.3s; }
+        .solution-card:nth-child(4) { transition-delay: 0.4s; }
+
+        .solution-card.card-hidden {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        /* ===========================================
+           SLIDE 4 — VIDEO
+           =========================================== */
+        .video-slide {
+            background: var(--loram-darker);
+        }
+        .video-slide .slide-content {
+            align-items: center;
+            justify-content: center;
+            gap: var(--content-gap);
+        }
+        .video-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            text-align: center;
+        }
+        .video-wrapper {
+            width: 100%;
+            max-width: 850px;
+            aspect-ratio: 16/9;
+            max-height: min(55vh, 480px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            background: #000;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--loram-red), transparent, var(--loram-red));
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* ===========================================
+           SLIDE 5 — EQUIPMENT CAROUSEL
+           =========================================== */
+        .carousel-slide {
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(175, 32, 36, 0.06) 0%, transparent 50%),
+                var(--loram-dark);
+        }
+        .carousel-slide .slide-content {
+            align-items: center;
+            gap: var(--content-gap);
+        }
+        .carousel-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            text-align: center;
+        }
+        .carousel-container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            gap: clamp(0.75rem, 1.5vw, 1.25rem);
+            transition: transform 0.5s var(--ease-out-expo);
+            cursor: grab;
+            padding: 0.5rem 0;
+        }
+        .carousel-track:active { cursor: grabbing; }
+        .carousel-item {
+            min-width: clamp(220px, 28vw, 280px);
+            background: rgba(26,26,26,0.8);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .carousel-item:hover {
+            border-color: rgba(175,32,36,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .carousel-item-img {
+            width: 100%;
+            height: clamp(100px, 15vh, 160px);
+            background: linear-gradient(135deg, var(--loram-dark), var(--loram-darker));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-item-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(26,26,26,0.8));
+        }
+        .carousel-item-body {
+            padding: clamp(0.5rem, 1.5vw, 1rem);
+        }
+        .carousel-item-body h4 {
+            font-family: var(--font-display);
+            font-size: clamp(0.8rem, 1.3vw, 1.1rem);
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .carousel-item-category {
+            font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+            color: var(--loram-red);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .carousel-item-body p {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            line-height: 1.4;
+        }
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: clamp(0.5rem, 1.5vh, 1rem);
+        }
+        .carousel-btn {
+            width: clamp(36px, 4vw, 44px);
+            height: clamp(36px, 4vw, 44px);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--loram-white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-btn:hover {
+            background: var(--loram-red);
+            border-color: var(--loram-red);
+        }
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            background: var(--loram-red);
+            transform: scale(1.3);
+        }
+
+        /* ===========================================
+           SLIDE 6 — IMPACT NUMBERS
+           =========================================== */
+        .impact-slide {
+            background: linear-gradient(135deg, var(--loram-dark) 0%, var(--loram-darker) 40%, var(--loram-red-dark) 100%);
+            position: relative;
+        }
+        .impact-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 70% 30%, rgba(175, 32, 36, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(175, 32, 36, 0.1) 0%, transparent 60%);
+        }
+        .impact-slide .slide-content {
+            align-items: center;
+            gap: var(--content-gap);
+            position: relative;
+            z-index: 2;
+        }
+        .impact-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            text-align: center;
+        }
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.75rem, 2vw, 2rem);
+            width: 100%;
+            max-width: 900px;
+        }
+        @media (max-width: 768px) {
+            .impact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .impact-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: clamp(1rem, 2vw, 1.75rem);
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        .impact-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(175,32,36,0.4);
+            background: rgba(255,255,255,0.08);
+        }
+        .impact-icon {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 0.5rem;
+        }
+        .impact-number {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--loram-white);
+            line-height: 1;
+        }
+        .impact-number .counter-suffix {
+            font-size: 0.6em;
+            color: var(--loram-red);
+        }
+        .impact-label {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            margin-top: 0.3rem;
+            line-height: 1.3;
+        }
+
+        /* Chart area */
+        .impact-chart-area {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            align-items: flex-end;
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+            height: clamp(80px, 15vh, 140px);
+        }
+        .chart-bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .chart-bar {
+            width: 100%;
+            max-width: 60px;
+            background: linear-gradient(180deg, var(--loram-red), var(--loram-red-dark));
+            border-radius: 6px 6px 0 0;
+            height: 0;
+            transition: height 1.5s var(--ease-out-expo);
+        }
+        .slide.visible .chart-bar {
+            height: var(--bar-height);
+        }
+        .chart-label {
+            font-size: clamp(0.5rem, 0.8vw, 0.65rem);
+            color: var(--loram-gray);
+            text-align: center;
+        }
+        .chart-value {
+            font-family: var(--font-display);
+            font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+            font-weight: 700;
+            color: var(--loram-white);
+        }
+
+        /* ===========================================
+           SLIDE 7 — DIGITAL TRANSFORMATION
+           =========================================== */
+        .digital-slide {
+            background: var(--loram-darker);
+        }
+        .digital-slide .slide-content {
+            align-items: center;
+            gap: var(--content-gap);
+        }
+        .digital-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            text-align: center;
+        }
+        .digital-steps {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .digital-steps {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        .digital-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: clamp(0.3rem, 1vw, 0.75rem);
+            padding: clamp(0.75rem, 2vw, 1.5rem);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+        .digital-step.step-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .digital-step.step-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .step-number {
+            width: clamp(48px, 7vw, 72px);
+            height: clamp(48px, 7vw, 72px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--loram-red), var(--loram-red-hover));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(175, 32, 36, 0.4);
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s var(--ease-spring);
+        }
+        .digital-step:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(175, 32, 36, 0.6);
+        }
+        .step-icon {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .digital-step h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 700;
+        }
+        .digital-step p {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            line-height: 1.4;
+            max-width: 200px;
+        }
+
+        /* Connecting lines */
+        .step-connector {
+            width: clamp(30px, 5vw, 60px);
+            height: 3px;
+            background: rgba(255,255,255,0.15);
+            position: relative;
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .step-connector {
+                width: 3px;
+                height: 30px;
+            }
+        }
+        .step-connector-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: var(--loram-red);
+            transition: width 1s var(--ease-out-expo);
+            border-radius: 2px;
+        }
+        @media (max-width: 768px) {
+            .step-connector-fill {
+                width: 100% !important;
+                height: 0;
+                transition: height 1s var(--ease-out-expo);
+            }
+        }
+        .slide.visible .step-connector-fill {
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .slide.visible .step-connector-fill {
+                height: 100%;
+            }
+        }
+
+        /* Digital decoration */
+        .digital-decoration {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .digital-decoration .deco-line {
+            position: absolute;
+            background: rgba(175, 32, 36, 0.06);
+            border-radius: 100px;
+        }
+
+        /* ===========================================
+           SLIDE 8 — CONTACT / CTA
+           =========================================== */
+        .contact-slide {
+            background:
+                radial-gradient(ellipse at 50% 50%, rgba(175, 32, 36, 0.12) 0%, transparent 60%),
+                var(--loram-darker);
+        }
+        .contact-slide .slide-content {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: var(--content-gap);
+        }
+        .contact-slide h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+        }
+        .contact-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--loram-red);
+            color: var(--loram-white);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+            padding: clamp(0.75rem, 2vw, 1.25rem) clamp(2rem, 4vw, 3rem);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .contact-cta:hover {
+            background: var(--loram-red-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(175, 32, 36, 0.5);
+        }
+        .contact-links {
+            display: flex;
+            gap: clamp(1rem, 3vw, 2rem);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--loram-gray);
+            text-decoration: none;
+            font-size: var(--body-size);
+            transition: color 0.3s;
+        }
+        .contact-link:hover {
+            color: var(--loram-white);
+        }
+        .contact-link svg {
+            width: clamp(18px, 2vw, 24px);
+            height: clamp(18px, 2vw, 24px);
+            fill: currentColor;
+        }
+
+        /* QR Code */
+        .qr-container {
+            background: var(--loram-white);
+            padding: clamp(0.5rem, 1vw, 0.75rem);
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .qr-container canvas {
+            display: block;
+            width: clamp(80px, 12vw, 120px);
+            height: clamp(80px, 12vw, 120px);
+        }
+        .qr-label {
+            font-size: var(--small-size);
+            color: var(--loram-gray);
+            margin-top: 0.3rem;
+        }
+
+        /* Contact logo animation */
+        .contact-logo {
+            width: clamp(120px, 18vw, 200px);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s var(--ease-out-expo);
+        }
+        .slide.visible .contact-logo {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ===========================================
+           KEYBOARD HINT (decorative)
+           =========================================== */
+        .keyboard-hint {
+            position: fixed;
+            bottom: clamp(0.5rem, 1.5vh, 1rem);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9996;
+            font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+            color: rgba(255,255,255,0.25);
+            display: flex;
+            gap: 1rem;
+        }
+        .keyboard-hint kbd {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 0.15rem 0.4rem;
+            font-family: var(--font-body);
+            font-size: inherit;
+        }
+    </style>
+</head>
+<body>
+    <!-- === PROGRESS BAR === -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- === LANGUAGE TOGGLE === -->
+    <div class="lang-toggle">
+        <button class="active" data-lang="pt" onclick="setLang('pt')">PT</button>
+        <button data-lang="en" onclick="setLang('en')">EN</button>
+        <button data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+
+    <!-- === NAVIGATION DOTS === -->
+    <nav class="nav-dots" id="navDots" aria-label="Navegação dos slides"></nav>
+
+    <!-- === KEYBOARD HINT === -->
+    <div class="keyboard-hint decorative">
+        <span><kbd>&larr;</kbd> <kbd>&rarr;</kbd> navegar</span>
+        <span><kbd>F</kbd> fullscreen</span>
+        <span><kbd>O</kbd> overview</span>
+    </div>
+
+    <!-- =============================================
+         SLIDE 1 — HERO
+         ============================================= -->
+    <section class="slide hero-slide" id="slide-0">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <canvas class="hero-particles" id="heroCanvas"></canvas>
+
+        <div class="hero-content">
+            <!-- LORAM Logo as SVG -->
+            <svg class="hero-logo" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="15" width="8" height="50" fill="#af2024" rx="2"/>
+                <rect x="12" y="15" width="8" height="50" fill="#af2024" rx="2" opacity="0.7"/>
+                <text x="30" y="58" font-family="'Roboto Condensed', sans-serif" font-weight="700" font-size="52" fill="#ffffff" letter-spacing="6">LORAM</text>
+                <line x1="30" y1="66" x2="250" y2="66" stroke="#af2024" stroke-width="2.5"/>
+                <text x="30" y="77" font-family="Roboto, sans-serif" font-weight="300" font-size="9" fill="#9ca3af" letter-spacing="4">MAINTENANCE OF WAY</text>
+            </svg>
+
+            <h1 class="hero-tagline">
+                <span data-pt="Liderando a transformação digital da manutenção ferroviária"
+                      data-en="Leading the digital transformation of railway maintenance"
+                      data-es="Liderando la transformación digital del mantenimiento ferroviario"></span>
+            </h1>
+
+            <p class="hero-subtitle">
+                <span data-pt="Desde 1954, fornecendo soluções inovadoras para ferrovias ao redor do mundo"
+                      data-en="Since 1954, delivering innovative solutions for railways worldwide"
+                      data-es="Desde 1954, proporcionando soluciones innovadoras para ferrocarriles en todo el mundo"></span>
+            </p>
+
+            <button class="hero-cta" onclick="goToSlide(1)">
+                <span data-pt="Descubra mais" data-en="Discover more" data-es="Descubra más"></span>
+                <span class="arrow">&rarr;</span>
+            </button>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-mouse"></div>
+            <span data-pt="Role para baixo" data-en="Scroll down" data-es="Desplácese hacia abajo"></span>
+        </div>
+
+        <div class="hero-accent-line"></div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 2 — TIMELINE / QUEM SOMOS
+         ============================================= -->
+    <section class="slide timeline-slide" id="slide-1">
+        <div class="slide-content">
+            <h2 class="reveal">
+                <span data-pt="Nossa História" data-en="Our History" data-es="Nuestra Historia"></span>
+            </h2>
+
+            <div class="timeline-container reveal">
+                <div class="timeline-track">
+                    <div class="timeline-line">
+                        <div class="timeline-line-fill"></div>
+                    </div>
+                    <div class="timeline-point active" data-year="0" onclick="showTimelineInfo(0)">1954</div>
+                    <div class="timeline-point" data-year="1" onclick="showTimelineInfo(1)">1970</div>
+                    <div class="timeline-point" data-year="2" onclick="showTimelineInfo(2)">1990</div>
+                    <div class="timeline-point" data-year="3" onclick="showTimelineInfo(3)">2005</div>
+                    <div class="timeline-point" data-year="4" onclick="showTimelineInfo(4)">2015</div>
+                    <div class="timeline-point" data-year="5" onclick="showTimelineInfo(5)">
+                        <span data-pt="Hoje" data-en="Today" data-es="Hoy"></span>
+                    </div>
+                </div>
+
+                <div class="timeline-info" id="timelineInfo">
+                    <h3 id="timelineTitle"></h3>
+                    <p id="timelineText"></p>
+                </div>
+            </div>
+
+            <div class="stats-row reveal">
+                <div class="stat-item">
+                    <div class="stat-number"><span class="counter" data-target="70">0</span>+</div>
+                    <div class="stat-label">
+                        <span data-pt="Anos de experiência" data-en="Years of experience" data-es="Años de experiencia"></span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><span class="counter" data-target="6">0</span></div>
+                    <div class="stat-label">
+                        <span data-pt="Regiões globais" data-en="Global regions" data-es="Regiones globales"></span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><span class="counter" data-target="3000">0</span>+</div>
+                    <div class="stat-label">
+                        <span data-pt="Colaboradores" data-en="Employees" data-es="Colaboradores"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini World Map -->
+            <div class="world-map-container reveal" style="margin-top:0.5rem">
+                <svg viewBox="0 0 700 350" width="100%" height="100%" style="opacity:0.15">
+                    <path d="M120,80 Q200,60 280,90 Q320,100 350,80 Q400,50 450,70 L480,65 Q520,55 560,80 Q580,95 600,85 L620,90 Q640,100 650,120 L660,150 Q650,180 630,200 L610,220 Q580,250 540,240 Q500,230 480,250 L450,270 Q420,290 380,280 Q340,260 320,270 L280,290 Q240,310 200,280 Q170,260 150,270 L120,280 Q90,290 70,260 Q50,230 60,200 L70,170 Q80,140 90,120 L100,100 Q110,85 120,80Z" fill="white"/>
+                    <path d="M80,160 Q70,180 60,200 Q55,220 65,240 L40,260 Q30,250 25,230 Q20,200 30,180 L50,160 Q60,150 80,160Z" fill="white"/>
+                    <path d="M180,170 Q170,200 165,230 Q162,250 170,270 Q180,290 175,310 L160,330 Q150,325 145,310 Q140,290 135,270 Q128,240 130,210 Q133,190 145,175 L165,160 Q175,158 180,170Z" fill="white"/>
+                </svg>
+                <!-- Map dots for LORAM presence -->
+                <div class="map-dot" style="top:28%;left:20%"><span class="map-tooltip" data-pt="América do Norte" data-en="North America" data-es="América del Norte"></span></div>
+                <div class="map-dot" style="top:60%;left:25%"><span class="map-tooltip" data-pt="Brasil" data-en="Brazil" data-es="Brasil"></span></div>
+                <div class="map-dot" style="top:30%;left:50%"><span class="map-tooltip">EMEA</span></div>
+                <div class="map-dot" style="top:38%;left:72%"><span class="map-tooltip" data-pt="Ásia" data-en="Asia" data-es="Asia"></span></div>
+                <div class="map-dot" style="top:70%;left:78%"><span class="map-tooltip" data-pt="Austrália" data-en="Australia" data-es="Australia"></span></div>
+                <div class="map-dot" style="top:35%;left:82%"><span class="map-tooltip" data-pt="Japão" data-en="Japan" data-es="Japón"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 3 — SOLUÇÕES
+         ============================================= -->
+    <section class="slide solutions-slide" id="slide-2">
+        <div class="slide-content">
+            <h2 class="reveal">
+                <span data-pt="Nossas Soluções" data-en="Our Solutions" data-es="Nuestras Soluciones"></span>
+            </h2>
+
+            <div class="solutions-grid">
+                <!-- Card 1: Manutenção de Via -->
+                <div class="solution-card card-hidden" onclick="toggleSolution(this)">
+                    <div class="solution-icon">&#9881;</div>
+                    <h3>
+                        <span data-pt="Manutenção de Via Permanente" data-en="Maintenance of Way" data-es="Mantenimiento de Vía Permanente"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Esmerilhamento e manutenção de trilhos de classe mundial"
+                              data-en="World-class rail grinding and track maintenance"
+                              data-es="Esmerilado y mantenimiento de vías de clase mundial"></span>
+                    </p>
+                    <div class="solution-details">
+                        <ul>
+                            <li><span data-pt="Esmerilhamento de trilhos (Rail Grinding)" data-en="Rail Grinding" data-es="Esmerilado de rieles"></span></li>
+                            <li><span data-pt="Manutenção de lastro" data-en="Ballast Maintenance" data-es="Mantenimiento de balasto"></span></li>
+                            <li><span data-pt="Limpeza de via" data-en="Track Cleaning" data-es="Limpieza de vía"></span></li>
+                            <li><span data-pt="Equipamentos: RG400, C44, LRG" data-en="Equipment: RG400, C44, LRG" data-es="Equipos: RG400, C44, LRG"></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 2: Inspeção -->
+                <div class="solution-card card-hidden" onclick="toggleSolution(this)">
+                    <div class="solution-icon">&#128269;</div>
+                    <h3>
+                        <span data-pt="Inspeção & Tecnologia" data-en="Inspection & Technology" data-es="Inspección y Tecnología"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Tecnologia avançada para diagnóstico ferroviário"
+                              data-en="Advanced technology for railway diagnostics"
+                              data-es="Tecnología avanzada para diagnóstico ferroviario"></span>
+                    </p>
+                    <div class="solution-details">
+                        <ul>
+                            <li><span data-pt="Ground Penetrating Radar (GPR)" data-en="Ground Penetrating Radar (GPR)" data-es="Radar de Penetración Terrestre (GPR)"></span></li>
+                            <li>LiDAR</li>
+                            <li><span data-pt="Inspeção de geometria de via" data-en="Track Geometry Inspection" data-es="Inspección de geometría de vía"></span></li>
+                            <li><span data-pt="Análise de dados em tempo real" data-en="Real-time Data Analytics" data-es="Análisis de datos en tiempo real"></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 3: Manuseio -->
+                <div class="solution-card card-hidden" onclick="toggleSolution(this)">
+                    <div class="solution-icon">&#9874;</div>
+                    <h3>
+                        <span data-pt="Manuseio de Materiais" data-en="Material Handling" data-es="Manejo de Materiales"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Soluções eficientes para movimentação de lastro e materiais"
+                              data-en="Efficient solutions for ballast and material handling"
+                              data-es="Soluciones eficientes para manejo de balasto y materiales"></span>
+                    </p>
+                    <div class="solution-details">
+                        <ul>
+                            <li>DumpTrain</li>
+                            <li>SlotMachine</li>
+                            <li><span data-pt="Sistemas de distribuição de lastro" data-en="Ballast Distribution Systems" data-es="Sistemas de distribución de balasto"></span></li>
+                            <li><span data-pt="Remoção e reciclagem" data-en="Removal and Recycling" data-es="Remoción y reciclaje"></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 4: Transformação Digital -->
+                <div class="solution-card card-hidden" onclick="toggleSolution(this)">
+                    <div class="solution-icon">&#128187;</div>
+                    <h3>
+                        <span data-pt="Transformação Digital" data-en="Digital Transformation" data-es="Transformación Digital"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Inovação e inteligência de dados para ferrovias"
+                              data-en="Data intelligence and innovation for railways"
+                              data-es="Innovación e inteligencia de datos para ferrocarriles"></span>
+                    </p>
+                    <div class="solution-details">
+                        <ul>
+                            <li><span data-pt="Plataforma de dados integrada" data-en="Integrated Data Platform" data-es="Plataforma de datos integrada"></span></li>
+                            <li><span data-pt="Manutenção preditiva com IA" data-en="AI-Powered Predictive Maintenance" data-es="Mantenimiento predictivo con IA"></span></li>
+                            <li><span data-pt="Dashboards em tempo real" data-en="Real-time Dashboards" data-es="Dashboards en tiempo real"></span></li>
+                            <li><span data-pt="IoT e sensores inteligentes" data-en="IoT and Smart Sensors" data-es="IoT y sensores inteligentes"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 4 — VÍDEO INSTITUCIONAL
+         ============================================= -->
+    <section class="slide video-slide" id="slide-3">
+        <div class="slide-content">
+            <h2 class="reveal">
+                <span data-pt="Veja a LORAM em ação" data-en="See LORAM in action" data-es="Vea LORAM en acción"></span>
+            </h2>
+
+            <div class="video-wrapper reveal-scale" style="transition-delay:0.2s">
+                <div class="video-glow"></div>
+                <iframe id="vimeoPlayer"
+                        src="https://player.vimeo.com/video/578575981?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen
+                        title="LORAM Institutional Video"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 5 — CAROUSEL DE EQUIPAMENTOS
+         ============================================= -->
+    <section class="slide carousel-slide" id="slide-4">
+        <div class="slide-content">
+            <h2 class="reveal">
+                <span data-pt="Nossos Equipamentos" data-en="Our Equipment" data-es="Nuestros Equipos"></span>
+            </h2>
+
+            <div class="carousel-container reveal" style="transition-delay:0.2s">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- RG400 -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #2a1a1a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="5" y="12" width="70" height="18" rx="3" fill="#af2024" opacity="0.6"/><circle cx="20" cy="34" r="5" fill="#666"/><circle cx="60" cy="34" r="5" fill="#666"/><rect x="15" y="8" width="30" height="8" rx="2" fill="#555"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Esmerilhamento" data-en="Rail Grinding" data-es="Esmerilado"></span>
+                            </div>
+                            <h4>RG400</h4>
+                            <p><span data-pt="Sistema de esmerilhamento de alto desempenho com até 96 pedras" data-en="High-performance grinding system with up to 96 stones" data-es="Sistema de esmerilado de alto rendimiento con hasta 96 piedras"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- C44 -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #1a1a2a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="5" y="14" width="70" height="16" rx="3" fill="#af2024" opacity="0.5"/><circle cx="18" cy="34" r="5" fill="#666"/><circle cx="62" cy="34" r="5" fill="#666"/><rect x="25" y="8" width="20" height="10" rx="2" fill="#555"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Esmerilhamento" data-en="Rail Grinding" data-es="Esmerilado"></span>
+                            </div>
+                            <h4>C44</h4>
+                            <p><span data-pt="Esmerilhadeira compacta para operações em linhas urbanas" data-en="Compact grinder for urban line operations" data-es="Esmeriladora compacta para operaciones en líneas urbanas"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- RGI -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #1a2a1a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="8" y="14" width="64" height="16" rx="3" fill="#af2024" opacity="0.4"/><circle cx="22" cy="34" r="5" fill="#666"/><circle cx="58" cy="34" r="5" fill="#666"/><rect x="30" y="6" width="18" height="12" rx="2" fill="#555"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Esmerilhamento" data-en="Rail Grinding" data-es="Esmerilado"></span>
+                            </div>
+                            <h4>RGI</h4>
+                            <p><span data-pt="Sistema de esmerilhamento com inspeção integrada" data-en="Grinding system with integrated inspection" data-es="Sistema de esmerilado con inspección integrada"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- LRG -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #2a1a2a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="3" y="15" width="74" height="15" rx="3" fill="#af2024" opacity="0.5"/><circle cx="16" cy="34" r="5" fill="#666"/><circle cx="40" cy="34" r="5" fill="#666"/><circle cx="64" cy="34" r="5" fill="#666"/><rect x="10" y="7" width="40" height="12" rx="2" fill="#555"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Esmerilhamento" data-en="Rail Grinding" data-es="Esmerilado"></span>
+                            </div>
+                            <h4>LRG</h4>
+                            <p><span data-pt="Esmerilhadeira leve para manutenção preventiva" data-en="Light rail grinder for preventive maintenance" data-es="Esmeriladora ligera para mantenimiento preventivo"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- DumpTrain -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #2a2a1a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><path d="M10,28 L10,12 L65,12 L70,18 L70,28Z" fill="#555" opacity="0.7"/><circle cx="20" cy="34" r="5" fill="#666"/><circle cx="55" cy="34" r="5" fill="#666"/><rect x="12" y="14" width="52" height="12" fill="#af2024" opacity="0.3"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Manuseio" data-en="Material Handling" data-es="Manejo"></span>
+                            </div>
+                            <h4>DumpTrain</h4>
+                            <p><span data-pt="Trem de descarga para distribuição de lastro eficiente" data-en="Dump train for efficient ballast distribution" data-es="Tren de descarga para distribución eficiente de balasto"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- SlotMachine -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #1a2a2a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="8" y="10" width="64" height="20" rx="3" fill="#555" opacity="0.6"/><circle cx="20" cy="34" r="5" fill="#666"/><circle cx="60" cy="34" r="5" fill="#666"/><rect x="20" y="13" width="40" height="8" rx="1" fill="#af2024" opacity="0.4"/><line x1="30" y1="22" x2="30" y2="30" stroke="#666" stroke-width="2"/><line x1="50" y1="22" x2="50" y2="30" stroke="#666" stroke-width="2"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Manuseio" data-en="Material Handling" data-es="Manejo"></span>
+                            </div>
+                            <h4>SlotMachine</h4>
+                            <p><span data-pt="Sistema de limpeza e substituição de lastro" data-en="Ballast cleaning and replacement system" data-es="Sistema de limpieza y sustitución de balasto"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- GPR -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #1a1a2a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="15" y="14" width="50" height="14" rx="3" fill="#555" opacity="0.6"/><circle cx="25" cy="34" r="4" fill="#666"/><circle cx="55" cy="34" r="4" fill="#666"/><path d="M25,14 Q40,4 55,14" stroke="#af2024" stroke-width="2" fill="none" opacity="0.7"/><circle cx="40" cy="6" r="3" fill="#af2024" opacity="0.5"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Inspeção" data-en="Inspection" data-es="Inspección"></span>
+                            </div>
+                            <h4>Ground Penetrating Radar</h4>
+                            <p><span data-pt="Radar de penetração no solo para análise de subleito" data-en="Ground penetrating radar for subgrade analysis" data-es="Radar de penetración terrestre para análisis de subrasante"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- LiDAR -->
+                    <div class="carousel-item">
+                        <div class="carousel-item-img" style="background: linear-gradient(135deg, #1a1a1a, #2a1a1a);">
+                            <svg width="80" height="40" viewBox="0 0 80 40"><rect x="20" y="16" width="40" height="12" rx="3" fill="#555" opacity="0.6"/><circle cx="30" cy="34" r="4" fill="#666"/><circle cx="50" cy="34" r="4" fill="#666"/><line x1="40" y1="10" x2="20" y2="4" stroke="#af2024" stroke-width="1.5" opacity="0.6"/><line x1="40" y1="10" x2="40" y2="2" stroke="#af2024" stroke-width="1.5" opacity="0.6"/><line x1="40" y1="10" x2="60" y2="4" stroke="#af2024" stroke-width="1.5" opacity="0.6"/><circle cx="40" cy="10" r="3" fill="#af2024" opacity="0.5"/></svg>
+                        </div>
+                        <div class="carousel-item-body">
+                            <div class="carousel-item-category">
+                                <span data-pt="Inspeção" data-en="Inspection" data-es="Inspección"></span>
+                            </div>
+                            <h4>LiDAR</h4>
+                            <p><span data-pt="Mapeamento a laser 3D para inspeção de via e entorno" data-en="3D laser mapping for track and surroundings inspection" data-es="Mapeo láser 3D para inspección de vía y entorno"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-controls reveal" style="transition-delay:0.3s">
+                <button class="carousel-btn" onclick="moveCarousel(-1)" aria-label="Anterior">&larr;</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <button class="carousel-btn" onclick="moveCarousel(1)" aria-label="Próximo">&rarr;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 6 — IMPACTO E NÚMEROS
+         ============================================= -->
+    <section class="slide impact-slide" id="slide-5">
+        <div class="slide-content">
+            <h2 class="reveal">
+                <span data-pt="Nosso Impacto" data-en="Our Impact" data-es="Nuestro Impacto"></span>
+            </h2>
+
+            <div class="impact-grid reveal" style="transition-delay:0.2s">
+                <div class="impact-card">
+                    <div class="impact-icon">&#128197;</div>
+                    <div class="impact-number">
+                        <span class="counter" data-target="70">0</span><span class="counter-suffix">+</span>
+                    </div>
+                    <div class="impact-label">
+                        <span data-pt="Anos de experiência" data-en="Years of experience" data-es="Años de experiencia"></span>
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-icon">&#128739;</div>
+                    <div class="impact-number">
+                        <span class="counter" data-target="250" data-suffix="k">0</span><span class="counter-suffix">km</span>
+                    </div>
+                    <div class="impact-label">
+                        <span data-pt="Km de trilhos mantidos" data-en="Km of track maintained" data-es="Km de vías mantenidas"></span>
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-icon">&#127758;</div>
+                    <div class="impact-number">
+                        <span class="counter" data-target="30">0</span><span class="counter-suffix">+</span>
+                    </div>
+                    <div class="impact-label">
+                        <span data-pt="Países de atuação" data-en="Countries of operation" data-es="Países de operación"></span>
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-icon">&#9879;</div>
+                    <div class="impact-number">
+                        <span class="counter" data-target="500">0</span><span class="counter-suffix">+</span>
+                    </div>
+                    <div class="impact-label">
+                        <span data-pt="Equipamentos operando" data-en="Equipment in operation" data-es="Equipos en operación"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bar chart -->
+            <div class="impact-chart-area reveal" style="transition-delay:0.4s">
+                <div class="chart-bar-group">
+                    <div class="chart-value">2019</div>
+                    <div class="chart-bar" style="--bar-height: 45%"></div>
+                    <div class="chart-label" data-pt="Base" data-en="Baseline" data-es="Base"></div>
+                </div>
+                <div class="chart-bar-group">
+                    <div class="chart-value">2020</div>
+                    <div class="chart-bar" style="--bar-height: 52%"></div>
+                    <div class="chart-label" data-pt="Expansão" data-en="Expansion" data-es="Expansión"></div>
+                </div>
+                <div class="chart-bar-group">
+                    <div class="chart-value">2021</div>
+                    <div class="chart-bar" style="--bar-height: 61%"></div>
+                    <div class="chart-label" data-pt="Digital" data-en="Digital" data-es="Digital"></div>
+                </div>
+                <div class="chart-bar-group">
+                    <div class="chart-value">2022</div>
+                    <div class="chart-bar" style="--bar-height: 73%"></div>
+                    <div class="chart-label" data-pt="Crescimento" data-en="Growth" data-es="Crecimiento"></div>
+                </div>
+                <div class="chart-bar-group">
+                    <div class="chart-value">2023</div>
+                    <div class="chart-bar" style="--bar-height: 84%"></div>
+                    <div class="chart-label" data-pt="Inovação" data-en="Innovation" data-es="Innovación"></div>
+                </div>
+                <div class="chart-bar-group">
+                    <div class="chart-value">2024</div>
+                    <div class="chart-bar" style="--bar-height: 95%"></div>
+                    <div class="chart-label" data-pt="Líder" data-en="Leader" data-es="Líder"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 7 — TRANSFORMAÇÃO DIGITAL
+         ============================================= -->
+    <section class="slide digital-slide" id="slide-6">
+        <div class="digital-decoration">
+            <div class="deco-line" style="width:200px;height:2px;top:20%;left:5%;transform:rotate(-15deg)"></div>
+            <div class="deco-line" style="width:150px;height:2px;top:70%;right:8%;transform:rotate(20deg)"></div>
+            <div class="deco-line" style="width:100px;height:2px;bottom:15%;left:15%;transform:rotate(-5deg)"></div>
+        </div>
+
+        <div class="slide-content">
+            <h2 class="reveal">
+                <span data-pt="O Futuro da Ferrovia" data-en="The Future of Rail" data-es="El Futuro del Ferrocarril"></span>
+            </h2>
+
+            <p class="reveal" style="text-align:center;color:var(--loram-gray);font-size:var(--body-size);max-width:600px;align-self:center;transition-delay:0.15s">
+                <span data-pt="Da coleta inteligente à ação preditiva: como transformamos dados em resultados"
+                      data-en="From smart collection to predictive action: how we turn data into results"
+                      data-es="De la recolección inteligente a la acción predictiva: cómo transformamos datos en resultados"></span>
+            </p>
+
+            <div class="digital-steps" style="margin-top:auto;margin-bottom:auto">
+                <div class="digital-step step-hidden" id="dStep1">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">&#128225;</div>
+                    <h3>
+                        <span data-pt="Coleta de Dados" data-en="Data Collection" data-es="Recolección de Datos"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Sensores IoT, LiDAR, GPR e câmeras coletam dados em tempo real durante a operação"
+                              data-en="IoT sensors, LiDAR, GPR and cameras collect real-time data during operation"
+                              data-es="Sensores IoT, LiDAR, GPR y cámaras recolectan datos en tiempo real durante la operación"></span>
+                    </p>
+                </div>
+
+                <div class="step-connector">
+                    <div class="step-connector-fill" style="transition-delay:0.5s"></div>
+                </div>
+
+                <div class="digital-step step-hidden" id="dStep2" style="transition-delay:0.4s">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">&#129504;</div>
+                    <h3>
+                        <span data-pt="Análise Inteligente" data-en="Intelligent Analysis" data-es="Análisis Inteligente"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Algoritmos de IA processam e identificam padrões, anomalias e tendências"
+                              data-en="AI algorithms process and identify patterns, anomalies and trends"
+                              data-es="Algoritmos de IA procesan e identifican patrones, anomalías y tendencias"></span>
+                    </p>
+                </div>
+
+                <div class="step-connector">
+                    <div class="step-connector-fill" style="transition-delay:1s"></div>
+                </div>
+
+                <div class="digital-step step-hidden" id="dStep3" style="transition-delay:0.8s">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">&#127919;</div>
+                    <h3>
+                        <span data-pt="Ação Preditiva" data-en="Predictive Action" data-es="Acción Predictiva"></span>
+                    </h3>
+                    <p>
+                        <span data-pt="Manutenção preventiva baseada em dados, otimizando custos e segurança"
+                              data-en="Data-driven preventive maintenance, optimizing costs and safety"
+                              data-es="Mantenimiento preventivo basado en datos, optimizando costos y seguridad"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================
+         SLIDE 8 — CONTATO / CTA FINAL
+         ============================================= -->
+    <section class="slide contact-slide" id="slide-7">
+        <div class="slide-content">
+            <!-- LORAM Logo -->
+            <svg class="contact-logo reveal" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="15" width="8" height="50" fill="#af2024" rx="2"/>
+                <rect x="12" y="15" width="8" height="50" fill="#af2024" rx="2" opacity="0.7"/>
+                <text x="30" y="58" font-family="'Roboto Condensed', sans-serif" font-weight="700" font-size="52" fill="#ffffff" letter-spacing="6">LORAM</text>
+                <line x1="30" y1="66" x2="250" y2="66" stroke="#af2024" stroke-width="2.5"/>
+            </svg>
+
+            <h2 class="reveal" style="transition-delay:0.15s">
+                <span data-pt="Pronto para transformar sua ferrovia?"
+                      data-en="Ready to transform your railway?"
+                      data-es="¿Listo para transformar su ferrocarril?"></span>
+            </h2>
+
+            <button class="contact-cta reveal" style="transition-delay:0.25s"
+                    onclick="window.open('https://loram.com/pt-br/contato','_blank')">
+                <span data-pt="Fale conosco" data-en="Contact us" data-es="Contáctenos"></span>
+                <span class="arrow">&rarr;</span>
+            </button>
+
+            <div class="contact-links reveal" style="transition-delay:0.35s">
+                <a class="contact-link" href="https://loram.com/pt-br/" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    loram.com
+                </a>
+                <a class="contact-link" href="https://www.linkedin.com/company/loram-maintenance-of-way/" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                    LinkedIn
+                </a>
+                <a class="contact-link" href="https://www.youtube.com/@LoramMaintenanceofWay" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+                    YouTube
+                </a>
+            </div>
+
+            <!-- QR Code (generated by canvas) -->
+            <div class="reveal" style="transition-delay:0.45s;display:flex;flex-direction:column;align-items:center">
+                <div class="qr-container">
+                    <canvas id="qrCanvas" width="120" height="120"></canvas>
+                </div>
+                <div class="qr-label">loram.com/pt-br</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         JAVASCRIPT — PRESENTATION ENGINE
+         =========================================== -->
+    <script>
+    (function() {
+        'use strict';
+
+        /* ===========================================
+           LANGUAGE SYSTEM
+           =========================================== */
+        let currentLang = 'pt';
+
+        function setLang(lang) {
+            currentLang = lang;
+            // Update toggle buttons
+            document.querySelectorAll('.lang-toggle button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            // Update all translatable elements
+            document.querySelectorAll('[data-pt]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang) || el.getAttribute('data-en') || el.getAttribute('data-pt');
+            });
+            // Update chart labels that are direct elements with data attributes
+            document.querySelectorAll('.chart-label[data-pt]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang) || el.getAttribute('data-pt');
+            });
+            // Re-show active timeline info
+            if (typeof currentTimelineIndex !== 'undefined') {
+                showTimelineInfo(currentTimelineIndex);
+            }
+        }
+        window.setLang = setLang;
+
+        /* ===========================================
+           TIMELINE DATA (trilingual)
+           =========================================== */
+        const timelineData = {
+            pt: [
+                { title: '1954 — Fundação', text: 'A LORAM é fundada em Georgetown, Minnesota, EUA, com foco em serviços de manutenção ferroviária.' },
+                { title: '1970 — Expansão', text: 'Início da expansão para além da América do Norte, desenvolvendo tecnologias proprietárias de esmerilhamento de trilhos.' },
+                { title: '1990 — Globalização', text: 'Presença consolidada em múltiplos continentes. Lançamento de equipamentos de nova geração para manutenção de via.' },
+                { title: '2005 — Tecnologia', text: 'Investimento massivo em tecnologias de inspeção: GPR, LiDAR e sistemas de medição avançados.' },
+                { title: '2015 — Brasil', text: 'Expansão para a América do Sul com a LORAM América do Sul, atendendo as principais ferrovias brasileiras.' },
+                { title: 'Hoje — Futuro Digital', text: 'Líder global com presença em 6 regiões. Transformação digital com IA, IoT e manutenção preditiva.' }
+            ],
+            en: [
+                { title: '1954 — Foundation', text: 'LORAM is founded in Georgetown, Minnesota, USA, focused on railway maintenance services.' },
+                { title: '1970 — Expansion', text: 'Expansion beyond North America begins, developing proprietary rail grinding technologies.' },
+                { title: '1990 — Globalization', text: 'Consolidated presence across multiple continents. Launch of next-generation track maintenance equipment.' },
+                { title: '2005 — Technology', text: 'Massive investment in inspection technologies: GPR, LiDAR and advanced measurement systems.' },
+                { title: '2015 — Brazil', text: 'Expansion to South America with LORAM South America, serving Brazil\'s major railways.' },
+                { title: 'Today — Digital Future', text: 'Global leader with presence in 6 regions. Digital transformation with AI, IoT and predictive maintenance.' }
+            ],
+            es: [
+                { title: '1954 — Fundación', text: 'LORAM es fundada en Georgetown, Minnesota, EE.UU., enfocada en servicios de mantenimiento ferroviario.' },
+                { title: '1970 — Expansión', text: 'Inicio de la expansión más allá de América del Norte, desarrollando tecnologías propietarias de esmerilado.' },
+                { title: '1990 — Globalización', text: 'Presencia consolidada en múltiples continentes. Lanzamiento de equipos de nueva generación.' },
+                { title: '2005 — Tecnología', text: 'Inversión masiva en tecnologías de inspección: GPR, LiDAR y sistemas de medición avanzados.' },
+                { title: '2015 — Brasil', text: 'Expansión a América del Sur con LORAM América del Sur, sirviendo a los principales ferrocarriles brasileños.' },
+                { title: 'Hoy — Futuro Digital', text: 'Líder global con presencia en 6 regiones. Transformación digital con IA, IoT y mantenimiento predictivo.' }
+            ]
+        };
+
+        let currentTimelineIndex = 0;
+
+        function showTimelineInfo(index) {
+            currentTimelineIndex = index;
+            const data = timelineData[currentLang][index];
+            document.getElementById('timelineTitle').textContent = data.title;
+            document.getElementById('timelineText').textContent = data.text;
+
+            document.querySelectorAll('.timeline-point').forEach((p, i) => {
+                p.classList.toggle('active', i === index);
+            });
+        }
+        window.showTimelineInfo = showTimelineInfo;
+
+        // Initialize timeline
+        showTimelineInfo(0);
+
+        /* ===========================================
+           SLIDE NAVIGATION ENGINE
+           =========================================== */
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        let isTransitioning = false;
+        let isOverviewMode = false;
+
+        // Generate nav dots
+        const navDotsContainer = document.getElementById('navDots');
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            navDotsContainer.appendChild(dot);
+        });
+
+        function goToSlide(index) {
+            if (isOverviewMode) toggleOverview();
+            if (index < 0 || index >= slides.length || isTransitioning) return;
+
+            isTransitioning = true;
+            currentSlide = index;
+
+            slides[index].scrollIntoView({ behavior: 'smooth' });
+
+            // Update nav dots
+            document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            // Update progress bar
+            const progress = ((index) / (slides.length - 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Handle video autoplay
+            handleVideoSlide(index);
+
+            setTimeout(() => { isTransitioning = false; }, 600);
+        }
+        window.goToSlide = goToSlide;
+
+        /* ===========================================
+           INTERSECTION OBSERVER
+           =========================================== */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const idx = Array.from(slides).indexOf(entry.target);
+                    if (idx !== -1) {
+                        currentSlide = idx;
+                        document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+                            dot.classList.toggle('active', i === idx);
+                        });
+                        const progress = (idx / (slides.length - 1)) * 100;
+                        document.getElementById('progressBar').style.width = progress + '%';
+                        handleVideoSlide(idx);
+
+                        // Animate solution cards
+                        if (idx === 2) animateSolutionCards();
+                        // Animate digital steps
+                        if (idx === 6) animateDigitalSteps();
+                        // Animate counters
+                        if (idx === 1 || idx === 5) animateCounters(entry.target);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(slide => observer.observe(slide));
+
+        /* ===========================================
+           KEYBOARD NAVIGATION
+           =========================================== */
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            switch(e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case ' ':
+                case 'PageDown':
+                    e.preventDefault();
+                    goToSlide(currentSlide + 1);
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    goToSlide(currentSlide - 1);
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    goToSlide(slides.length - 1);
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+                case 'o':
+                case 'O':
+                    toggleOverview();
+                    break;
+                case 'Escape':
+                    if (isOverviewMode) toggleOverview();
+                    break;
+            }
+        });
+
+        /* ===========================================
+           TOUCH / SWIPE NAVIGATION
+           =========================================== */
+        let touchStartY = 0;
+        let touchStartX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            const deltaY = touchStartY - e.changedTouches[0].clientY;
+            const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+            // Only navigate if vertical swipe is dominant
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
+                if (deltaY > 0) goToSlide(currentSlide + 1);
+                else goToSlide(currentSlide - 1);
+            }
+        }, { passive: true });
+
+        /* ===========================================
+           MOUSE WHEEL NAVIGATION
+           =========================================== */
+        let wheelTimeout = null;
+        document.addEventListener('wheel', (e) => {
+            if (isOverviewMode) return;
+            if (wheelTimeout) return;
+
+            wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 800);
+
+            if (e.deltaY > 30) goToSlide(currentSlide + 1);
+            else if (e.deltaY < -30) goToSlide(currentSlide - 1);
+        }, { passive: true });
+
+        /* ===========================================
+           FULLSCREEN
+           =========================================== */
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        /* ===========================================
+           OVERVIEW MODE
+           =========================================== */
+        function toggleOverview() {
+            isOverviewMode = !isOverviewMode;
+            document.body.classList.toggle('overview-mode', isOverviewMode);
+
+            if (isOverviewMode) {
+                slides[currentSlide].classList.add('current-overview');
+                slides.forEach((slide, i) => {
+                    slide.onclick = () => {
+                        goToSlide(i);
+                    };
+                });
+            } else {
+                slides.forEach(slide => {
+                    slide.classList.remove('current-overview');
+                    slide.onclick = null;
+                });
+            }
+        }
+
+        /* ===========================================
+           VIMEO VIDEO CONTROL
+           =========================================== */
+        let videoPlaying = false;
+
+        function handleVideoSlide(index) {
+            const iframe = document.getElementById('vimeoPlayer');
+            if (!iframe) return;
+
+            if (index === 3 && !videoPlaying) {
+                // Auto-play when entering slide 4
+                iframe.src = iframe.src.includes('autoplay=1')
+                    ? iframe.src
+                    : iframe.src + '&autoplay=1';
+                videoPlaying = true;
+            } else if (index !== 3 && videoPlaying) {
+                // Pause when leaving
+                iframe.src = iframe.src.replace('&autoplay=1', '');
+                videoPlaying = false;
+            }
+        }
+
+        /* ===========================================
+           SOLUTION CARDS — EXPAND/COLLAPSE
+           =========================================== */
+        function toggleSolution(card) {
+            const wasExpanded = card.classList.contains('expanded');
+            // Close all
+            document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('expanded'));
+            // Open clicked if it wasn't expanded
+            if (!wasExpanded) card.classList.add('expanded');
+        }
+        window.toggleSolution = toggleSolution;
+
+        function animateSolutionCards() {
+            const cards = document.querySelectorAll('.solution-card');
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.remove('card-hidden');
+                }, i * 150);
+            });
+        }
+
+        /* ===========================================
+           DIGITAL STEPS ANIMATION
+           =========================================== */
+        function animateDigitalSteps() {
+            ['dStep1', 'dStep2', 'dStep3'].forEach((id, i) => {
+                setTimeout(() => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.classList.remove('step-hidden');
+                        el.classList.add('step-visible');
+                    }
+                }, i * 400);
+            });
+        }
+
+        /* ===========================================
+           ANIMATED COUNTERS
+           =========================================== */
+        const countedSlides = new Set();
+
+        function animateCounters(slideEl) {
+            const slideId = slideEl.id;
+            if (countedSlides.has(slideId)) return;
+            countedSlides.add(slideId);
+
+            slideEl.querySelectorAll('.counter').forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const suffix = counter.dataset.suffix || '';
+                const duration = 2000;
+                const start = performance.now();
+
+                function update(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    // Ease out
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const current = Math.round(target * eased);
+                    counter.textContent = current.toLocaleString() + suffix;
+
+                    if (progress < 1) requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+            });
+        }
+
+        /* ===========================================
+           EQUIPMENT CAROUSEL
+           =========================================== */
+        const track = document.getElementById('carouselTrack');
+        const items = track ? track.querySelectorAll('.carousel-item') : [];
+        let carouselPos = 0;
+        let itemsPerView = 3;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragCurrentX = 0;
+
+        function updateItemsPerView() {
+            const w = window.innerWidth;
+            if (w < 500) itemsPerView = 1;
+            else if (w < 768) itemsPerView = 2;
+            else itemsPerView = 3;
+        }
+        updateItemsPerView();
+        window.addEventListener('resize', () => {
+            updateItemsPerView();
+            updateCarousel();
+        });
+
+        function updateCarousel() {
+            if (!track || items.length === 0) return;
+            const maxPos = Math.max(0, items.length - itemsPerView);
+            carouselPos = Math.max(0, Math.min(carouselPos, maxPos));
+
+            const itemWidth = items[0].offsetWidth + parseFloat(getComputedStyle(track).gap || 16);
+            track.style.transform = `translateX(-${carouselPos * itemWidth}px)`;
+
+            // Update dots
+            updateCarouselDots();
+        }
+
+        function moveCarousel(dir) {
+            carouselPos += dir;
+            updateCarousel();
+        }
+        window.moveCarousel = moveCarousel;
+
+        // Carousel dots
+        function updateCarouselDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            if (!dotsContainer) return;
+            const maxPos = Math.max(0, items.length - itemsPerView);
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i <= maxPos; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (i === carouselPos ? ' active' : '');
+                dot.onclick = () => { carouselPos = i; updateCarousel(); };
+                dotsContainer.appendChild(dot);
+            }
+        }
+        updateCarouselDots();
+
+        // Carousel drag
+        if (track) {
+            track.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                dragStartX = e.clientX;
+                track.style.transition = 'none';
+            });
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                dragCurrentX = e.clientX;
+            });
+            document.addEventListener('mouseup', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                track.style.transition = 'transform 0.5s var(--ease-out-expo)';
+                const diff = dragStartX - dragCurrentX;
+                if (Math.abs(diff) > 50) {
+                    moveCarousel(diff > 0 ? 1 : -1);
+                }
+            });
+
+            // Touch drag for carousel
+            track.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                dragStartX = e.touches[0].clientX;
+                track.style.transition = 'none';
+            }, { passive: true });
+            track.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                dragCurrentX = e.touches[0].clientX;
+            }, { passive: true });
+            track.addEventListener('touchend', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                track.style.transition = 'transform 0.5s var(--ease-out-expo)';
+                const diff = dragStartX - dragCurrentX;
+                if (Math.abs(diff) > 50) {
+                    moveCarousel(diff > 0 ? 1 : -1);
+                }
+            }, { passive: true });
+        }
+
+        /* ===========================================
+           HERO PARTICLES (Canvas)
+           =========================================== */
+        const heroCanvas = document.getElementById('heroCanvas');
+        if (heroCanvas) {
+            const ctx = heroCanvas.getContext('2d');
+            let particles = [];
+
+            function resizeCanvas() {
+                heroCanvas.width = window.innerWidth;
+                heroCanvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * heroCanvas.width;
+                    this.y = Math.random() * heroCanvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.speedY = (Math.random() - 0.5) * 0.3;
+                    this.opacity = Math.random() * 0.4 + 0.1;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > heroCanvas.width ||
+                        this.y < 0 || this.y > heroCanvas.height) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(175, 32, 36, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            // Create particles
+            const count = Math.min(60, Math.floor(window.innerWidth / 20));
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(175, 32, 36, ${0.08 * (1 - dist / 120)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
+
+        /* ===========================================
+           QR CODE GENERATOR (Simple)
+           =========================================== */
+        function drawQR() {
+            const canvas = document.getElementById('qrCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const cellSize = size / 25;
+
+            // Simple visual QR-like pattern (not a real QR — purely decorative)
+            ctx.fillStyle = '#1a1a1a';
+
+            // Finder patterns (corners)
+            function drawFinder(x, y) {
+                ctx.fillRect(x * cellSize, y * cellSize, 7 * cellSize, 7 * cellSize);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect((x + 1) * cellSize, (y + 1) * cellSize, 5 * cellSize, 5 * cellSize);
+                ctx.fillStyle = '#af2024';
+                ctx.fillRect((x + 2) * cellSize, (y + 2) * cellSize, 3 * cellSize, 3 * cellSize);
+                ctx.fillStyle = '#1a1a1a';
+            }
+
+            drawFinder(1, 1);
+            drawFinder(17, 1);
+            drawFinder(1, 17);
+
+            // Data area — pseudo-random pattern for visual effect
+            const seed = 42;
+            let rng = seed;
+            function nextRng() {
+                rng = (rng * 1103515245 + 12345) & 0x7fffffff;
+                return rng / 0x7fffffff;
+            }
+
+            for (let y = 0; y < 25; y++) {
+                for (let x = 0; x < 25; x++) {
+                    // Skip finder pattern areas
+                    if ((x < 9 && y < 9) || (x > 15 && y < 9) || (x < 9 && y > 15)) continue;
+
+                    if (nextRng() > 0.5) {
+                        ctx.fillStyle = '#1a1a1a';
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+
+            // Center "L" text
+            ctx.fillStyle = '#af2024';
+            ctx.font = 'bold ' + (cellSize * 3) + 'px "Roboto Condensed", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('L', size / 2, size / 2);
+        }
+        // Wait for fonts
+        document.fonts.ready.then(drawQR);
+
+        /* ===========================================
+           INITIAL STATE
+           =========================================== */
+        // Mark first slide visible
+        slides[0].classList.add('visible');
+
+        // Apply default language
+        setLang('pt');
+
+    })();
+    </script>
+</body>
+</html>
