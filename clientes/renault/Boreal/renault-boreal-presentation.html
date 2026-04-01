@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renault Boreal — Para Sonhar Grande</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+<style>
+/* === TOKENS === */
+:root{--rn:#000;--ry:#EFDF00;--ryg:rgba(239,223,0,.35);--rd:#1a1a1a;--rdr:#0d0d0d;--rl:#f5f5f5;--rw:#fff;--rg:#777;--rgl:#bbb;--f:'Nunito Sans',sans-serif;--t:clamp(2rem,6vw,4.5rem);--h2:clamp(1.4rem,3.5vw,2.8rem);--h3:clamp(.95rem,2vw,1.35rem);--b:clamp(.72rem,1.3vw,1rem);--s:clamp(.6rem,.95vw,.82rem);--tn:clamp(.52rem,.75vw,.7rem);--p:clamp(1.2rem,4vw,4rem);--g:clamp(.5rem,1.8vw,1.5rem);--e:cubic-bezier(.16,1,.3,1);--sp:cubic-bezier(.34,1.56,.64,1)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow-x:hidden;font-family:var(--f);background:var(--rdr);color:var(--rw);cursor:none}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;position:relative;display:flex;flex-direction:column}
+.si{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;max-height:100%;overflow:hidden;padding:var(--p);position:relative;z-index:3}
+img{max-width:100%;object-fit:cover}
+@media(max-height:700px){:root{--p:clamp(.6rem,2.5vw,1.5rem);--g:clamp(.3rem,1vw,.6rem);--t:clamp(1.3rem,4.5vw,2.5rem);--h2:clamp(1rem,3vw,1.75rem)}}
+@media(max-height:600px){:root{--p:clamp(.4rem,2vw,1rem);--t:clamp(1.1rem,4vw,2rem);--b:clamp(.65rem,1.1vw,.85rem)}.nav-dots,.kh,.scroll-ind{display:none!important}}
+@media(max-width:600px){:root{--t:clamp(1.5rem,8vw,2.5rem)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.15s!important}html{scroll-behavior:auto}}
+/* noise */
+.noise::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:2}
+/* cursor */
+.cur{position:fixed;width:22px;height:22px;border:2px solid var(--ry);border-radius:50%;pointer-events:none;z-index:99999;transition:width .2s,height .2s,background .2s;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cur.h{width:55px;height:55px;background:rgba(239,223,0,.15)}
+.cd{position:fixed;width:5px;height:5px;background:var(--ry);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+@media(max-width:768px){.cur,.cd{display:none}html,body{cursor:auto}}
+/* reveal */
+.rv{opacity:0;transform:translateY(35px);transition:opacity .7s var(--e),transform .7s var(--e)}
+.rv-l{opacity:0;transform:translateX(-50px);transition:opacity .7s var(--e),transform .7s var(--e)}
+.rv-r{opacity:0;transform:translateX(50px);transition:opacity .7s var(--e),transform .7s var(--e)}
+.rv-s{opacity:0;transform:scale(.85);transition:opacity .7s var(--e),transform .7s var(--e)}
+.slide.vis .rv,.slide.vis .rv-l,.slide.vis .rv-r,.slide.vis .rv-s{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.6s}
+/* lang */
+.lt{position:fixed;top:clamp(.6rem,1.5vw,1rem);right:clamp(.6rem,1.5vw,1rem);z-index:9999;display:flex;background:rgba(0,0,0,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.lt button{background:0;border:0;color:var(--rg);font-family:var(--f);font-size:var(--tn);font-weight:700;padding:clamp(.3rem,.6vw,.45rem) clamp(.55rem,.9vw,.75rem);cursor:none;transition:all .25s}
+.lt button:hover{color:#fff}.lt button.active{background:var(--ry);color:#000}
+/* progress */
+.pb{position:fixed;top:0;left:0;height:2px;background:var(--ry);z-index:9998;transition:width .35s ease;box-shadow:0 0 12px var(--ryg)}
+/* nav dots */
+.nav-dots{position:fixed;right:clamp(.4rem,1vw,.9rem);top:50%;transform:translateY(-50%);z-index:9997;display:flex;flex-direction:column;gap:clamp(5px,.7vh,10px)}
+.nd{width:clamp(7px,.7vw,10px);height:clamp(7px,.7vw,10px);border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.15);cursor:none;transition:all .3s var(--e)}
+.nd:hover{background:rgba(239,223,0,.35);border-color:var(--ry)}
+.nd.a{background:var(--ry);border-color:var(--ry);transform:scale(1.35);box-shadow:0 0 10px var(--ryg)}
+/* overview */
+body.ov .slide{height:auto!important;min-height:180px;max-height:220px;scroll-snap-align:none;margin:8px;border-radius:10px;border:2px solid rgba(255,255,255,.06);transform:scale(.95);transition:all .3s;cursor:none;display:inline-flex;width:calc(25% - 16px);vertical-align:top}
+body.ov .slide:hover{border-color:var(--ry);transform:scale(.97)}
+body.ov .nav-dots,body.ov .pb,body.ov .lt,body.ov .kh{display:none}
+/* tilt */
+.tc{transform-style:preserve-3d;perspective:800px;transition:transform .3s var(--e),box-shadow .3s}
+/* sh */
+.sh{text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(.15rem,.4vw,.3rem)}
+.sh-n{font-size:var(--tn);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rg)}
+.sh h2{font-size:var(--h2);font-weight:900;line-height:1.05}
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:10000;display:none;align-items:center;justify-content:center;cursor:none}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--rd);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:clamp(1.5rem,3vw,2.5rem);max-width:420px;width:90%;text-align:center;position:relative;animation:modalIn .4s var(--e)}
+@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:none}}
+.modal-box .mi{font-size:clamp(2.5rem,6vw,4rem);margin-bottom:.5rem}
+.modal-box h3{font-size:var(--h3);font-weight:800;margin-bottom:.3rem}
+.modal-box p{font-size:var(--s);color:var(--rgl);line-height:1.55}
+.modal-close{position:absolute;top:.7rem;right:.7rem;background:rgba(255,255,255,.1);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:1rem;cursor:none;transition:background .2s}
+.modal-close:hover{background:var(--ry);color:#000}
+/* click indicator */
+.click-hint{font-size:var(--tn);color:rgba(255,255,255,.3);margin-top:.2rem;transition:color .3s}
+.click-hint::before{content:'+ '}
+
+/* === SLIDE 1 HERO === */
+.hero{background:#000}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.85) 100%);z-index:1}
+.hero .si{z-index:4;text-align:center;gap:var(--g)}
+.hero-logo{width:clamp(50px,7vw,75px);opacity:0;animation:logoIn 2s var(--e) .3s forwards}
+@keyframes logoIn{0%{opacity:0;transform:scale(.7) rotate(-15deg)}100%{opacity:1;transform:none}}
+.hero-line{width:clamp(35px,6vw,65px);height:3px;background:var(--ry);opacity:0;animation:fu .8s ease 1.8s forwards}
+.hero-t{font-size:var(--t);font-weight:900;letter-spacing:-.03em;line-height:.92;text-transform:uppercase}
+.hero-tw{display:inline;border-right:3px solid var(--ry);animation:bk .7s step-end infinite}
+@keyframes bk{50%{border-color:transparent}}
+.hero-sub{font-size:clamp(.9rem,2.2vw,1.4rem);font-weight:300;letter-spacing:.12em;opacity:0;animation:fu 1s var(--e) 2.2s forwards}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.scroll-ind{position:absolute;bottom:clamp(.8rem,2.5vh,2rem);left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:.35rem;opacity:0;animation:fu 1s ease 3s forwards}
+.scroll-ind span{font-size:var(--tn);color:var(--rg);letter-spacing:2px;text-transform:uppercase}
+.sa{width:18px;height:18px;border-right:2px solid var(--ry);border-bottom:2px solid var(--ry);transform:rotate(45deg);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{transform:rotate(45deg) translate(0);opacity:1}50%{transform:rotate(45deg) translate(5px,5px);opacity:.3}}
+#hP{position:absolute;inset:0;z-index:2;pointer-events:none}
+
+/* === SLIDE 2 MANIFESTO === */
+.mani{background:#000}.mani-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(239,223,0,.04),transparent 55%),radial-gradient(ellipse at 70% 30%,rgba(239,223,0,.03),transparent 50%);animation:gs 10s ease infinite alternate;z-index:0}@keyframes gs{0%{opacity:.5}100%{opacity:1}}
+.mt{font-size:clamp(1.1rem,2.8vw,2.1rem);font-weight:300;line-height:1.7;max-width:720px;text-align:center}
+.mt .w{display:inline-block;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}.mt .w.v{opacity:1;transform:none}
+
+/* === SLIDE 3 HIGHLIGHTS === */
+.hls{background:var(--rd)}
+.hlg{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.1vw,.9rem);width:100%;max-width:880px}
+@media(max-width:768px){.hlg{grid-template-columns:repeat(2,1fr)}}
+.hlc{background:rgba(255,255,255,.035);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:clamp(.65rem,1.4vw,1.2rem);text-align:center;cursor:none;transition:all .45s var(--e);position:relative;overflow:hidden}
+.hlc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ry);transform:scaleX(0);transition:transform .4s var(--e)}.hlc:hover::before{transform:scaleX(1)}
+.hlc:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.5);border-color:rgba(239,223,0,.12)}
+.hlc.hid{opacity:0;transform:translateY(40px)}
+.hli{width:clamp(32px,4.5vw,46px);height:clamp(32px,4.5vw,46px);margin:0 auto clamp(.25rem,.6vw,.45rem)}
+.hli svg{width:100%;height:100%;stroke:var(--ry);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 1.5s var(--e)}
+.slide.vis .hli svg{stroke-dashoffset:0}
+.hlc h3{font-size:var(--h3);font-weight:800;margin-bottom:.15rem}.hlc p{font-size:var(--s);color:var(--rg);line-height:1.35}
+
+/* === SLIDE 4 DESIGN === */
+.dsg{background:var(--rl);color:#000}
+.dsg .si{flex-direction:row;gap:clamp(1.5rem,4vw,3.5rem)}
+@media(max-width:768px){.dsg .si{flex-direction:column}}
+.dt{flex:1;display:flex;flex-direction:column;gap:var(--g)}
+.dt .nm{font-size:var(--s);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rg)}
+.dt h2{font-size:var(--h2);font-weight:900;line-height:1.05}
+.dt p{font-size:var(--b);line-height:1.65;color:#444}
+.dv{flex:1;border-radius:16px;overflow:hidden;max-height:min(55vh,450px)}
+.dv img{width:100%;height:100%;object-fit:cover;max-height:min(55vh,450px);border-radius:16px}
+.tags{display:flex;flex-wrap:wrap;gap:clamp(.25rem,.5vw,.4rem)}
+.tag{background:#000;color:#fff;font-size:var(--tn);font-weight:700;padding:clamp(.18rem,.4vw,.3rem) clamp(.45rem,.8vw,.65rem);border-radius:100px;transition:all .3s}.tag:hover{background:var(--ry);color:#000}
+
+/* === SLIDE 5 EXP === */
+.exp{background:var(--rdr)}
+.exp-bg{position:absolute;inset:0;z-index:0}.exp-bg img{width:100%;height:100%;object-fit:cover;opacity:.25}
+.eg{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1vw,.85rem);width:100%;max-width:780px}
+@media(max-width:768px){.eg{grid-template-columns:1fr}}
+.ec{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:clamp(.55rem,1.1vw,.9rem);transition:all .35s var(--e);cursor:none}
+.ec:hover{border-color:rgba(239,223,0,.2);transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.4)}
+.ec h4{font-size:var(--s);font-weight:800;margin-bottom:.15rem}.ec p{font-size:var(--tn);color:var(--rg);line-height:1.45}
+
+/* === SLIDE 6 SOUND === */
+.snd{background:#000}
+.car-tv{width:100%;max-width:500px;aspect-ratio:2/1;max-height:min(38vh,280px);position:relative;margin:0 auto}
+.spk{position:absolute;width:clamp(20px,2.8vw,30px);height:clamp(20px,2.8vw,30px);border-radius:50%;background:rgba(239,223,0,.1);border:2px solid rgba(239,223,0,.4);cursor:none;transition:all .35s var(--sp);display:flex;align-items:center;justify-content:center;z-index:5}
+.spk::after{content:'';width:5px;height:5px;background:var(--ry);border-radius:50%;transition:all .3s}
+.spk:hover,.spk.act{background:rgba(239,223,0,.25);border-color:var(--ry);transform:scale(1.3);box-shadow:0 0 25px var(--ryg)}
+.spk.dim{opacity:.15;transform:scale(.75)}
+.spk .wv{position:absolute;width:100%;height:100%;border-radius:50%;border:2px solid var(--ry);opacity:0;pointer-events:none}
+.spk.act .wv{animation:wo 1.2s ease-out infinite}
+@keyframes wo{0%{transform:scale(1);opacity:.6}100%{transform:scale(3.5);opacity:0}}
+.spk .sl{position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);color:var(--ry);font-size:var(--tn);font-weight:700;padding:.12rem .4rem;border-radius:5px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;border:1px solid rgba(239,223,0,.2)}
+.spk:hover .sl,.spk.act .sl{opacity:1}
+.env-r{display:flex;gap:clamp(.35rem,.7vw,.55rem);flex-wrap:wrap;justify-content:center}
+.env{background:rgba(239,223,0,.06);border:1.5px solid rgba(239,223,0,.12);border-radius:100px;padding:clamp(.2rem,.4vw,.3rem) clamp(.5rem,1vw,.8rem);font-family:var(--f);font-size:var(--tn);font-weight:700;color:var(--rgl);cursor:none;transition:all .3s}
+.env:hover,.env.act{background:rgba(239,223,0,.15);border-color:var(--ry);color:var(--ry)}
+.si-info{text-align:center;min-height:clamp(28px,4vh,42px)}.si-info h4{font-size:var(--h3);font-weight:800}.si-info p{font-size:var(--tn);color:var(--rg)}
+
+/* === SLIDE 7 MEDIA === */
+.med{background:var(--rd)}
+.ag{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.35rem,.7vw,.6rem);width:100%;max-width:680px}
+@media(max-width:600px){.ag{grid-template-columns:repeat(3,1fr)}}
+.ap{background:rgba(255,255,255,.035);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:clamp(.35rem,.7vw,.55rem);text-align:center;cursor:none;transition:all .3s}
+.ap:hover{border-color:rgba(239,223,0,.18);background:rgba(255,255,255,.065);transform:translateY(-4px) scale(1.03)}
+.ap-i{font-size:clamp(1.1rem,2.2vw,1.6rem);margin-bottom:.1rem}.ap-n{font-size:var(--tn);font-weight:700}
+.gq{font-size:var(--b);font-style:italic;color:var(--rgl);text-align:center;max-width:480px}
+
+/* === SLIDE 8 INTERIOR === */
+.int{background:var(--rl);color:#000}
+.comp{width:100%;max-width:700px;aspect-ratio:16/9;max-height:min(45vh,360px);position:relative;border-radius:16px;overflow:hidden;cursor:none;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.comp-i{position:absolute;inset:0}.comp-i img{width:100%;height:100%;object-fit:cover}
+.comp-af{clip-path:inset(0 0 0 var(--sp,50%))}
+.comp-lb{position:absolute;bottom:clamp(.4rem,1.2vw,.8rem);padding:clamp(.2rem,.4vw,.35rem) clamp(.5rem,1vw,.85rem);font-size:var(--s);font-weight:800;border-radius:8px;backdrop-filter:blur(12px);z-index:5}
+.comp-lb-b{left:clamp(.4rem,1.2vw,.8rem);background:rgba(0,0,0,.75);color:#fff}
+.comp-lb-a{right:clamp(.4rem,1.2vw,.8rem);background:rgba(239,223,0,.9);color:#000}
+.comp-h{position:absolute;top:0;bottom:0;left:var(--sp,50%);width:3px;background:#fff;z-index:6;transform:translateX(-50%)}
+.comp-h::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(30px,3.5vw,40px);height:clamp(30px,3.5vw,40px);background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:clamp(.65rem,1.1vw,.85rem);color:#000;box-shadow:0 4px 15px rgba(0,0,0,.25);animation:hp 2s ease-in-out infinite}
+@keyframes hp{0%,100%{box-shadow:0 4px 15px rgba(0,0,0,.25)}50%{box-shadow:0 4px 30px rgba(0,0,0,.45)}}
+.fc{display:flex;gap:clamp(.4rem,.9vw,.7rem);flex-wrap:wrap;justify-content:center;max-width:700px}
+.fci{background:rgba(0,0,0,.05);backdrop-filter:blur(10px);border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:clamp(.35rem,.7vw,.55rem) clamp(.5rem,1vw,.85rem);display:flex;align-items:center;gap:.35rem;cursor:none;transition:all .35s}
+.fci:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,.1);border-color:rgba(239,223,0,.3);background:rgba(239,223,0,.06)}
+.fci svg{width:clamp(16px,2.2vw,24px);height:clamp(16px,2.2vw,24px);stroke:#000;fill:none;stroke-width:1.5;flex-shrink:0}
+.fci h5{font-size:var(--tn);font-weight:800}.fci p{font-size:var(--tn);color:var(--rg);display:none}.fci:hover p{display:block}
+
+/* === SLIDE 9 PERF === */
+.perf{background:var(--rdr)}
+.perf-bg{position:absolute;inset:0;z-index:0}.perf-bg img{width:100%;height:100%;object-fit:cover;opacity:.2}
+.specs{display:flex;gap:clamp(1.2rem,3.5vw,3.5rem);justify-content:center;flex-wrap:wrap}
+.spec{text-align:center}.spec-n{font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;color:var(--ry);line-height:1}.spec-u{font-size:.35em;color:var(--rg);font-weight:400}.spec-l{font-size:var(--tn);color:var(--rg);margin-top:.1rem}
+.modes{display:flex;gap:clamp(.25rem,.5vw,.4rem);justify-content:center;flex-wrap:wrap}
+.mode{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:100px;padding:clamp(.25rem,.5vw,.38rem) clamp(.6rem,1.2vw,1rem);font-family:var(--f);font-size:var(--s);font-weight:700;color:#fff;cursor:none;transition:all .3s;text-transform:lowercase}
+.mode:hover,.mode.act{border-color:var(--ry);color:var(--ry);background:rgba(239,223,0,.07)}
+.mdesc{font-size:var(--s);color:var(--rg);text-align:center;max-width:480px;min-height:clamp(22px,3vh,35px)}
+.amb{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;max-width:450px}
+.ac{width:clamp(9px,1.3vw,14px);height:clamp(9px,1.3vw,14px);border-radius:50%;transition:transform .15s}.ac:hover{transform:scale(2)}
+
+/* === SLIDE 10 ADAS === */
+.adas{background:var(--rd)}
+.abadge{font-size:var(--tn);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ry);border:1px solid rgba(239,223,0,.25);padding:clamp(.18rem,.32vw,.25rem) clamp(.4rem,.8vw,.65rem);border-radius:4px}
+.adg{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.4rem,.8vw,.65rem);width:100%;max-width:780px}
+@media(max-width:768px){.adg{grid-template-columns:repeat(2,1fr)}}
+.adc{background:rgba(255,255,255,.03);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:clamp(.45rem,.9vw,.75rem);cursor:none;transition:all .4s}
+.adc:hover{border-color:rgba(239,223,0,.18);background:rgba(255,255,255,.055);transform:translateY(-4px)}
+.adc .ic{font-size:clamp(1rem,1.8vw,1.4rem);margin-bottom:.12rem}
+.adc h4{font-size:var(--s);font-weight:800;margin-bottom:.08rem}
+.adc p{font-size:var(--tn);color:var(--rg);line-height:1.4;max-height:0;overflow:hidden;transition:max-height .5s}
+.adc.op p{max-height:120px}
+.adc .click-hint{color:rgba(255,255,255,.2)}
+
+/* === SLIDE 11 COLORS === */
+.clr{background:var(--rl);color:#000}
+.car-img-wrap{width:100%;max-width:550px;max-height:min(35vh,280px);position:relative;margin:0 auto}
+.car-img-wrap img{width:100%;height:100%;object-fit:contain;max-height:min(35vh,280px);transition:filter .5s ease,opacity .5s ease}
+.cg{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(.5rem,1vw,.9rem);width:100%;max-width:600px}
+@media(max-width:768px){.cg{grid-template-columns:repeat(3,1fr)}}
+.sw{aspect-ratio:1;border-radius:50%;cursor:none;transition:all .4s var(--sp);border:3px solid transparent;max-width:65px;width:100%;margin:0 auto}
+.sw:hover{transform:scale(1.15)}.sw.act{border-color:#000;transform:scale(1.18);box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.cn{text-align:center;font-size:var(--tn);font-weight:700;margin-top:clamp(.12rem,.3vw,.2rem)}
+.cdsp{text-align:center;font-size:var(--h3);font-weight:900;min-height:clamp(20px,3vh,32px)}
+
+/* === SLIDE 12 VERSIONS === */
+.vers{background:var(--rdr)}
+.vg{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.1vw,.9rem);width:100%;max-width:880px}
+@media(max-width:768px){.vg{grid-template-columns:1fr}}
+.vc{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:clamp(.65rem,1.3vw,1.1rem);cursor:none;transition:all .4s}
+.vc:hover{border-color:rgba(239,223,0,.18);transform:translateY(-6px);box-shadow:0 20px 45px rgba(0,0,0,.4)}
+.vb{display:inline-block;background:var(--ry);color:#000;font-size:var(--tn);font-weight:800;padding:.08rem .45rem;border-radius:4px;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.5px}
+.vc h3{font-size:var(--h3);font-weight:900;text-transform:lowercase;margin-bottom:clamp(.2rem,.5vw,.4rem)}
+.vc ul{list-style:none;font-size:var(--tn);color:var(--rgl)}
+.vc li{padding:.06rem 0 .06rem .7rem;position:relative;line-height:1.45}.vc li::before{content:'·';position:absolute;left:0;color:var(--ry);font-weight:900}
+
+/* === SLIDE 13 ACC === */
+.acc{background:var(--rd)}
+.aw{width:100%;max-width:780px;overflow:hidden}
+.at{display:flex;gap:clamp(.65rem,1.3vw,1.1rem);transition:transform .5s var(--e);cursor:none}
+.ai{min-width:clamp(230px,32vw,320px);background:rgba(255,255,255,.035);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.05);border-radius:14px;overflow:hidden;flex-shrink:0;transition:all .3s}
+.ai:hover{border-color:rgba(239,223,0,.18);transform:translateY(-4px)}
+.ai-img{width:100%;height:clamp(90px,14vh,145px);overflow:hidden}.ai-img img{width:100%;height:100%;object-fit:cover}
+.ai-b{padding:clamp(.45rem,1vw,.85rem)}.ai-b h4{font-size:var(--s);font-weight:800;margin-bottom:.12rem}.ai-b p{font-size:var(--tn);color:var(--rg);line-height:1.4}
+.actr{display:flex;align-items:center;justify-content:center;gap:.7rem}
+.abtn{width:clamp(30px,3.5vw,38px);height:clamp(30px,3.5vw,38px);border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:.9rem;cursor:none;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.abtn:hover{background:var(--ry);color:#000;border-color:var(--ry)}
+.adots{display:flex;gap:4px}.adot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.12);cursor:none;transition:all .3s}.adot.act{background:var(--ry);transform:scale(1.4)}
+
+/* === SLIDE 14 CTA === */
+.cta{background:#000}.cta .si{text-align:center;gap:var(--g)}
+.cta-tl{font-size:var(--h2);font-weight:300}.cta-tl em{font-style:normal;font-weight:900;color:var(--ry)}
+.cta-b{display:inline-flex;align-items:center;gap:.5rem;background:var(--ry);color:#000;font-family:var(--f);font-weight:900;font-size:clamp(.85rem,1.6vw,1.15rem);padding:clamp(.65rem,1.3vw,.95rem) clamp(1.5rem,3vw,2.5rem);border:none;border-radius:100px;cursor:none;text-decoration:none;transition:all .3s;animation:pu 2.5s ease-in-out infinite}
+@keyframes pu{0%,100%{box-shadow:0 0 0 0 rgba(239,223,0,.3)}50%{box-shadow:0 0 0 18px rgba(239,223,0,0)}}
+.cta-b:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 12px 35px rgba(239,223,0,.35)}
+.cta-lnk{display:flex;gap:clamp(.8rem,2vw,1.8rem)}.cta-lnk a{color:var(--rg);text-decoration:none;font-size:var(--s);font-weight:600;transition:color .3s}.cta-lnk a:hover{color:var(--ry)}
+.cta-logo{width:clamp(70px,10vw,120px);opacity:0;transition:all 1.2s var(--e)}.slide.vis .cta-logo{opacity:1}
+#cC{position:absolute;inset:0;pointer-events:none;z-index:5}
+.kh{position:fixed;bottom:clamp(.4rem,.8vh,.7rem);left:50%;transform:translateX(-50%);z-index:9996;font-size:var(--tn);color:rgba(255,255,255,.18);display:flex;gap:.7rem}.kh kbd{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:3px;padding:.08rem .3rem;font-family:var(--f)}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"></div><div class="cd" id="cd"></div>
+<div class="pb" id="pB"></div>
+<div class="lt"><button class="active" data-lang="pt" onclick="SL('pt')">PT</button><button data-lang="en" onclick="SL('en')">EN</button><button data-lang="es" onclick="SL('es')">ES</button></div>
+<nav class="nav-dots" id="nD"></nav>
+<div class="kh"><span><kbd>&larr;</kbd><kbd>&rarr;</kbd></span><span><kbd>F</kbd></span><span><kbd>O</kbd></span></div>
+
+<!-- APP MODAL -->
+<div class="modal-overlay" id="appModal" onclick="if(event.target===this)closeModal()">
+<div class="modal-box"><button class="modal-close" onclick="closeModal()">&times;</button><div class="mi" id="mIcon"></div><h3 id="mName"></h3><p id="mDesc"></p></div>
+</div>
+
+<!-- S1 HERO -->
+<section class="slide hero noise" id="s0">
+<div class="hero-bg"><img src="boreal-assets/boreal-3d-34front.jpg" alt="Renault Boreal"></div>
+<div class="hero-ov"></div><canvas id="hP"></canvas>
+<div class="si" data-plx=".03">
+<svg class="hero-logo" viewBox="0 0 80 90" fill="none" width="70" height="80"><path d="M40 0L80 45L40 90L0 45Z" stroke="#fff" stroke-width="2.5" fill="none" stroke-dasharray="320" stroke-dashoffset="320"><animate attributeName="stroke-dashoffset" to="0" dur="2s" fill="freeze"/></path><path d="M40 12L68 45L40 78L12 45Z" stroke="#fff" stroke-width="1" fill="none" opacity=".35" stroke-dasharray="240" stroke-dashoffset="240"><animate attributeName="stroke-dashoffset" to="0" dur="2s" begin=".5s" fill="freeze"/></path></svg>
+<div class="hero-line"></div>
+<h1 class="hero-t">RENAULT<br><span class="hero-tw" id="tw"></span></h1>
+<p class="hero-sub"><span data-pt="para sonhar grande" data-en="dream big" data-es="para soñar en grande"></span></p>
+</div>
+<div class="scroll-ind"><div class="sa"></div><span>scroll</span></div>
+</section>
+
+<!-- S2 MANIFESTO -->
+<section class="slide mani noise" id="s1"><div class="mani-bg"></div><div class="si"><p class="mt" id="mT"><span data-pt="Com pureza e elegância no design, incorporados a uma identidade de marca moderna, a Renault apresenta o Renault Boreal" data-en="With purity and elegance in design, embodied in a modern brand identity, Renault presents the Renault Boreal" data-es="Con pureza y elegancia en el diseño, incorporados a una identidad de marca moderna, Renault presenta el Renault Boreal"></span></p></div></section>
+
+<!-- S3 HIGHLIGHTS -->
+<section class="slide hls noise" id="s2"><div class="si">
+<div class="sh rv"><h2><span data-pt="destaques" data-en="highlights" data-es="destacados"></span></h2></div>
+<div class="hlg" id="hG">
+<div class="hlc hid tc"><div class="hli"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="22" rx="3"/><line x1="14" y1="38" x2="34" y2="38"/></svg></div><h3>openR link 10"</h3><p><span data-pt="Com Google integrado" data-en="With Google built-in" data-es="Con Google integrado"></span></p></div>
+<div class="hlc hid tc"><div class="hli"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 7"/></svg></div><h3><span data-pt="5 modos" data-en="5 modes" data-es="5 modos"></span></h3><p>multi-sense</p></div>
+<div class="hlc hid tc"><div class="hli"><svg viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="4"/><line x1="6" y1="24" x2="42" y2="24"/></svg></div><h3><span data-pt="teto solar" data-en="sunroof" data-es="techo solar"></span></h3><p><span data-pt="panorâmico elétrico" data-en="electric panoramic" data-es="panorámico eléctrico"></span></p></div>
+<div class="hlc hid tc"><div class="hli"><svg viewBox="0 0 48 48"><path d="M10 36C10 18 38 18 38 36"/><circle cx="24" cy="36" r="4"/></svg></div><h3><span data-pt="massagem" data-en="massage" data-es="masaje"></span></h3><p><span data-pt="banco com memória" data-en="seat with memory" data-es="asiento con memoria"></span></p></div>
+<div class="hlc hid tc"><div class="hli"><svg viewBox="0 0 48 48"><path d="M8 38V16l8-6h16l8 6v22z"/><line x1="24" y1="20" x2="24" y2="34"/></svg></div><h3>1.770 L</h3><p><span data-pt="porta-malas" data-en="trunk" data-es="maletero"></span></p></div>
+<div class="hlc hid tc"><div class="hli"><svg viewBox="0 0 48 48"><path d="M24 6l4 8h10l-7 6 3 10-10-6-10 6 3-10-7-6h10z"/></svg></div><h3>24 ADAS</h3><p><span data-pt="assistência avançada" data-en="advanced assistance" data-es="asistencia avanzada"></span></p></div>
+</div></div></section>
+
+<!-- S4 DESIGN -->
+<section class="slide dsg" id="s3"><div class="si">
+<div class="dt" data-plx=".02"><span class="nm rv">01. design</span><h2 class="rv d1"><span data-pt="design único de SUV" data-en="unique SUV design" data-es="diseño único de SUV"></span></h2><p class="rv d2"><span data-pt="Renault Boreal, o SUV premium com design marcante e sofisticado. Sua postura ousada e elevada, com um capô alto e horizontal e 213 mm de distância do solo, impõe presença e sofisticação por onde passa." data-en="Renault Boreal, the premium SUV with striking and sophisticated design. Its bold elevated stance, with a high horizontal hood and 213mm ground clearance, commands presence everywhere." data-es="Renault Boreal, el SUV premium con diseño impactante y sofisticado. Su postura audaz y elevada, con un capó alto y horizontal y 213 mm al suelo, impone presencia por donde pasa."></span></p><div class="tags rv d3"><span class="tag"><span data-pt='rodas 19" river diamantadas' data-en='19" diamond-cut wheels' data-es='rodas 19" river diamantadas'></span></span><span class="tag">full LED</span><span class="tag">213mm</span><span class="tag"><span data-pt="setas dinâmicas" data-en="dynamic indicators" data-es="intermitentes dinámicos"></span></span></div></div>
+<div class="dv rv-r d2"><img src="boreal-assets/boreal-3d-front.jpg" alt="Renault Boreal Design"></div>
+</div></section>
+
+<!-- S5 EXPERIENCE -->
+<section class="slide exp noise" id="s4">
+<div class="exp-bg"><img src="boreal-assets/boreal-3d-side.jpg" alt="Boreal Interior"></div>
+<div class="si">
+<div class="sh rv"><span class="sh-n">02. <span data-pt="experiência de condução" data-en="driving experience" data-es="experiencia de conducción"></span></span><h2><span data-pt="desfrute de uma experiência única" data-en="enjoy a unique experience" data-es="disfrute de una experiencia única"></span></h2></div>
+<div class="eg">
+<div class="ec tc rv d1" onclick="this.classList.toggle('op')"><h4>openR link</h4><p><span data-pt='Display horizontal duplo: painel 10" e multimídia 10"' data-en='Dual horizontal display: 10" panel and 10" multimedia' data-es='Display horizontal doble: panel 10" y multimedia 10"'></span></p><div class="click-hint"><span data-pt="clique para detalhes" data-en="click for details" data-es="clic para detalles"></span></div></div>
+<div class="ec tc rv d2" onclick="this.classList.toggle('op')"><h4><span data-pt="console elevado" data-en="raised console" data-es="consola elevada"></span></h4><p><span data-pt="Compartimento refrigerado, câmbio e-shifter, freio eletrônico" data-en="Refrigerated compartment, e-shifter, electronic brake" data-es="Compartimento refrigerado, cambio e-shifter, freno electrónico"></span></p><div class="click-hint"><span data-pt="clique para detalhes" data-en="click for details" data-es="clic para detalles"></span></div></div>
+<div class="ec tc rv d3" onclick="this.classList.toggle('op')"><h4><span data-pt="bancos premium" data-en="premium seats" data-es="asientos premium"></span></h4><p><span data-pt="Massageador elétrico: 3 modos, 5 configurações, memórias" data-en="Electric massager: 3 modes, 5 settings, memories" data-es="Masajeador eléctrico: 3 modos, 5 configuraciones, memorias"></span></p><div class="click-hint"><span data-pt="clique para detalhes" data-en="click for details" data-es="clic para detalles"></span></div></div>
+</div>
+</div></section>
+
+<!-- S6 HARMAN KARDON -->
+<section class="slide snd noise" id="s5"><div class="si">
+<div class="sh rv"><h2>Harman Kardon&reg;</h2><p style="font-size:var(--s);color:var(--rg)"><span data-pt="10 alto-falantes · 5 ambientes sonoros" data-en="10 speakers · 5 sound environments" data-es="10 altavoces · 5 ambientes sonoros"></span></p></div>
+<div class="car-tv rv d1" id="cT">
+<!-- SUV TOP VIEW — elongated rectangle shape -->
+<svg viewBox="0 0 500 250" style="position:absolute;inset:0;width:100%;height:100%" fill="none">
+<!-- Body shell -->
+<path d="M120,20 L380,20 Q420,20 435,50 L445,80 Q450,110 450,125 Q450,140 445,170 L435,200 Q420,230 380,230 L120,230 Q80,230 65,200 L55,170 Q50,140 50,125 Q50,110 55,80 L65,50 Q80,20 120,20Z" stroke="rgba(255,255,255,.22)" stroke-width="2" fill="rgba(255,255,255,.015)"/>
+<!-- Hood -->
+<path d="M150,32 L350,32 Q370,32 380,45 L385,58 Q385,62 375,65 L125,65 Q115,62 115,58 L120,45 Q130,32 150,32Z" stroke="rgba(255,255,255,.1)" stroke-width="1" fill="rgba(255,255,255,.02)"/>
+<!-- Windshield -->
+<path d="M130,68 L370,68 L355,92 Q340,100 250,100 Q160,100 145,92Z" stroke="rgba(255,255,255,.12)" stroke-width="1" fill="rgba(255,255,255,.03)"/>
+<!-- Rear window -->
+<path d="M145,170 Q160,162 250,162 Q340,162 355,170 L370,190 L130,190Z" stroke="rgba(255,255,255,.1)" stroke-width="1" fill="rgba(255,255,255,.02)"/>
+<!-- Center line -->
+<line x1="250" y1="25" x2="250" y2="225" stroke="rgba(255,255,255,.04)" stroke-width="1" stroke-dasharray="4 4"/>
+<!-- Front seats -->
+<rect x="190" y="105" width="42" height="42" rx="6" stroke="rgba(255,255,255,.08)" fill="none"/>
+<rect x="268" y="105" width="42" height="42" rx="6" stroke="rgba(255,255,255,.08)" fill="none"/>
+<!-- Rear seats -->
+<rect x="178" y="155" width="35" height="32" rx="5" stroke="rgba(255,255,255,.06)" fill="none"/>
+<rect x="218" y="155" width="35" height="32" rx="5" stroke="rgba(255,255,255,.06)" fill="none"/>
+<rect x="258" y="155" width="35" height="32" rx="5" stroke="rgba(255,255,255,.06)" fill="none"/>
+<!-- Side mirrors -->
+<ellipse cx="48" cy="80" rx="6" ry="4" stroke="rgba(255,255,255,.08)" fill="none"/>
+<ellipse cx="452" cy="80" rx="6" ry="4" stroke="rgba(255,255,255,.08)" fill="none"/>
+</svg>
+<!-- Speakers -->
+<div class="spk" style="top:30%;left:14%" data-t="médios" data-te="mids" data-ts="medios"><span class="wv"></span><span class="sl">médios</span></div>
+<div class="spk" style="top:30%;left:84%" data-t="médios" data-te="mids" data-ts="medios"><span class="wv"></span><span class="sl">médios</span></div>
+<div class="spk" style="top:38%;left:7%" data-t="agudos" data-te="tweeters" data-ts="agudos"><span class="wv"></span><span class="sl">agudos</span></div>
+<div class="spk" style="top:38%;left:91%" data-t="agudos" data-te="tweeters" data-ts="agudos"><span class="wv"></span><span class="sl">agudos</span></div>
+<div class="spk" style="top:56%;left:6%" data-t="médios" data-te="mids" data-ts="medios"><span class="wv"></span><span class="sl">médios</span></div>
+<div class="spk" style="top:56%;left:92%" data-t="médios" data-te="mids" data-ts="medios"><span class="wv"></span><span class="sl">médios</span></div>
+<div class="spk" style="top:68%;left:10%" data-t="agudos" data-te="tweeters" data-ts="agudos"><span class="wv"></span><span class="sl">agudos</span></div>
+<div class="spk" style="top:68%;left:88%" data-t="agudos" data-te="tweeters" data-ts="agudos"><span class="wv"></span><span class="sl">agudos</span></div>
+<div class="spk" style="top:80%;left:30%" data-t="graves" data-te="woofers" data-ts="graves"><span class="wv"></span><span class="sl">graves</span></div>
+<div class="spk" style="top:88%;left:50%" data-t="subgraves" data-te="subwoofer" data-ts="subgraves"><span class="wv"></span><span class="sl">subgraves</span></div>
+</div>
+<div class="si-info rv d2" id="sI"><h4><span data-pt="clique em um alto-falante" data-en="click a speaker" data-es="clic en un altavoz"></span></h4></div>
+<div class="env-r rv d3">
+<button class="env" onclick="setEnv(this,'0,1,2,3,4,5,6,7,8,9')">Studio</button>
+<button class="env" onclick="setEnv(this,'0,1,4,5,8,9')">Concert Hall</button>
+<button class="env" onclick="setEnv(this,'0,1,2,3,4,5,6,7,8,9')">Immersive</button>
+<button class="env" onclick="setEnv(this,'0,1,2,3')">Podcast</button>
+<button class="env" onclick="setEnv(this,'')">Silent</button>
+</div>
+<p class="rv d4" style="font-size:var(--tn);color:var(--rg);text-align:center"><span data-pt="5 ambientes sonoros por Jean-Michel Jarre" data-en="5 sound environments by Jean-Michel Jarre" data-es="5 ambientes sonoros por Jean-Michel Jarre"></span></p>
+</div></section>
+
+<!-- S7 MULTIMEDIA -->
+<section class="slide med noise" id="s6"><div class="si">
+<div class="sh rv"><span class="sh-n">03. <span data-pt="multimídia" data-en="multimedia" data-es="multimedia"></span></span><h2>openR link 10" + Google</h2></div>
+<p class="gq rv d1">"Ok Google..." <span data-pt="— Fale com ele para planejar viagens, consultar agenda ou definir a temperatura." data-en="— Talk to it to plan trips, check your agenda or set the temperature." data-es="— Hable con él para planear viajes, consultar agenda o definir la temperatura."></span></p>
+<div class="ag rv d2">
+<div class="ap tc" onclick="openApp('&#128506;','Google Maps','Acesse diretamente no painel para uma navegação tranquila e intuitiva.','Access directly on the panel for calm, intuitive navigation.','Acceda directamente en el panel para una navegación tranquila e intuitiva.')"><div class="ap-i">&#128506;</div><div class="ap-n">Google Maps</div></div>
+<div class="ap tc" onclick="openApp('&#127908;','Google Assistant','O assistente de voz está à sua disposição. Fale com ele para planejar uma viagem, consultar sua agenda ou definir a temperatura.','The voice assistant is at your disposal. Talk to it to plan a trip, check your agenda or set the temperature.','El asistente de voz está a su disposición. Hable con él para planear un viaje, consultar su agenda o definir la temperatura.')"><div class="ap-i">&#127908;</div><div class="ap-n">Assistant</div></div>
+<div class="ap tc" onclick="openApp('&#9654;','Google Play','Explore mais de 100 aplicativos e conteúdos exclusivos disponíveis via Google Play diretamente na tela central.','Explore 100+ apps and exclusive content available via Google Play directly on the central screen.','Explore más de 100 aplicaciones y contenidos exclusivos disponibles vía Google Play directamente en la pantalla central.')"><div class="ap-i">&#9654;</div><div class="ap-n">Google Play</div></div>
+<div class="ap tc" onclick="openApp('&#127916;','Prime Video','Streaming que traz histórias de todo o mundo para sua tela. De originais exclusivos da Amazon a sucessos globais, assista ao que ama, quando quiser.','Streaming that brings stories from around the world. From Amazon originals to global hits, watch what you love, whenever you want.','Streaming que trae historias de todo el mundo. De originales exclusivos de Amazon a éxitos globales, vea lo que ama, cuando quiera.')"><div class="ap-i">&#127916;</div><div class="ap-n">Prime Video</div></div>
+<div class="ap tc" onclick="openApp('&#128251;','Radioplayer','Rádio inteligente projetado para a estrada. Reúne estações ao vivo, podcasts e música, tudo em um só lugar. Mantenha-se conectado, entretido e no controle enquanto dirige.','Smart radio designed for the road. Live stations, podcasts and music, all in one place. Stay connected and entertained while driving.','Radio inteligente diseñada para la carretera. Estaciones en vivo, podcasts y música, todo en un solo lugar.')"><div class="ap-i">&#128251;</div><div class="ap-n">Radioplayer</div></div>
+<div class="ap tc" onclick="openApp('&#127760;','Vivaldi','Navegador eficiente e rápido que respeita sua privacidade. Navegue com tranquilidade e segurança.','Efficient, fast browser that respects your privacy. Browse with peace of mind and security.','Navegador eficiente y rápido que respeta su privacidad.')"><div class="ap-i">&#127760;</div><div class="ap-n">Vivaldi</div></div>
+<div class="ap tc" onclick="openApp('&#127909;','HBO Max','Streaming premium que traz histórias icônicas à vida. Desde filmes de sucesso até séries premiadas, HBO Max oferece entretenimento que inspira, emociona e conecta.','Premium streaming bringing iconic stories to life. From hit movies to award-winning series, HBO Max delivers entertainment that inspires and connects.','Streaming premium que trae historias icónicas a la vida. Desde películas de éxito hasta series premiadas.')"><div class="ap-i">&#127909;</div><div class="ap-n">HBO Max</div></div>
+<div class="ap tc" onclick="openApp('&#127925;','SongPop','Dirija ao ritmo com seu novo jogo musical! Junte a rádio e descubra músicas populares com sua família e amigos.','Drive to the beat with your new music game! Discover popular songs with family and friends.','¡Conduzca al ritmo con su nuevo juego musical! Descubra canciones populares con familia y amigos.')"><div class="ap-i">&#127925;</div><div class="ap-n">SongPop</div></div>
+<div class="ap tc" onclick="openApp('&#128663;','Waze','Navegação baseada na comunidade que compartilha informações em tempo real. O Waze oferece mais tranquilidade para você.','Community-based navigation sharing real-time information. Waze offers more peace of mind.','Navegación basada en la comunidad que comparte información en tiempo real.')"><div class="ap-i">&#128663;</div><div class="ap-n">Waze</div></div>
+<div class="ap tc" onclick="openApp('&#127911;','Amazon Music','Pegue a estrada enquanto ouve playlists, e muito mais, com a assinatura Amazon Prime.','Hit the road listening to playlists and more with your Amazon Prime subscription.','Tome la carretera mientras escucha playlists y mucho más con la suscripción Amazon Prime.')"><div class="ap-i">&#127911;</div><div class="ap-n">Amazon Music</div></div>
+<div class="ap tc" onclick="openApp('&#9917;','A8 Sports','Notícias esportivas que mantêm você atualizado em tempo real. Resultados de partidas e análises de especialistas. A8 entrega tudo que você precisa para ficar no jogo.','Sports news keeping you updated in real-time. Match results and expert analysis. A8 delivers everything you need.','Noticias deportivas que lo mantienen actualizado en tiempo real. Resultados de partidos y análisis de expertos.')"><div class="ap-i">&#9917;</div><div class="ap-n">A8 Sports</div></div>
+<div class="ap tc" style="background:rgba(239,223,0,.06);border-color:rgba(239,223,0,.12)"><div class="ap-i">+</div><div class="ap-n" style="color:var(--ry)">100+ apps</div></div>
+</div></div></section>
+
+<!-- S8 INTERIOR -->
+<section class="slide int" id="s7"><div class="si">
+<div class="sh rv"><span class="sh-n" style="color:#888">04. <span data-pt="espaço interno" data-en="interior space" data-es="espacio interior"></span></span><h2><span data-pt="um ambiente de bem-estar" data-en="a wellness environment" data-es="un ambiente de bienestar"></span></h2></div>
+<div class="comp rv d1" id="comp">
+<div class="comp-i"><img src="boreal-assets/trunk-generic.jpg" alt="Boreal trunk 586L"></div>
+<div class="comp-i comp-af"><img src="boreal-assets/trunk-open.jpg" alt="Boreal trunk 1770L"></div>
+<div class="comp-lb comp-lb-b">586 L</div><div class="comp-lb comp-lb-a">1.770 L</div>
+<div class="comp-h" id="cH"></div>
+</div>
+<div class="fc rv d2">
+<div class="fci tc"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a3 3 0 110 6 3 3 0 010-6z"/></svg><div><h5><span data-pt="ar dual zone" data-en="dual zone AC" data-es="AC dual zone"></span></h5><p><span data-pt="Digital automático" data-en="Automatic digital" data-es="Digital automático"></span></p></div></div>
+<div class="fci tc"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="12" y1="18" x2="12" y2="18.5"/></svg><div><h5>USB-C</h5><p><span data-pt="2 portas traseiras" data-en="2 rear ports" data-es="2 puertos traseros"></span></p></div></div>
+<div class="fci tc"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7z"/></svg><div><h5>YouClip</h5><p><span data-pt="5 acessórios" data-en="5 accessories" data-es="5 accesorios"></span></p></div></div>
+<div class="fci tc"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg><div><h5><span data-pt="indução" data-en="wireless" data-es="inalámbrico"></span></h5><p><span data-pt="Carregador sem fio" data-en="Wireless charger" data-es="Cargador inalámbrico"></span></p></div></div>
+</div></div></section>
+
+<!-- S9 PERFORMANCE -->
+<section class="slide perf noise" id="s8">
+<div class="perf-bg"><img src="boreal-assets/boreal-3d-rear.jpg" alt="Boreal Performance"></div>
+<div class="si">
+<div class="sh rv"><span class="sh-n">05. <span data-pt="prazer de dirigir" data-en="driving pleasure" data-es="placer de conducir"></span></span><h2><span data-pt="alto desempenho" data-en="high performance" data-es="alto rendimiento"></span></h2></div>
+<div class="specs rv d1"><div class="spec"><div class="spec-n"><span class="ctr" data-target="163">0</span><span class="spec-u"> cv</span></div><div class="spec-l">flexfuel turbo</div></div><div class="spec"><div class="spec-n"><span class="ctr" data-target="270">0</span><span class="spec-u"> Nm</span></div><div class="spec-l">torque</div></div><div class="spec"><div class="spec-n">EDC <span class="ctr" data-target="6">0</span></div><div class="spec-l"><span data-pt="marchas" data-en="gears" data-es="marchas"></span></div></div><div class="spec"><div class="spec-n"><span class="ctr" data-target="180">0</span><span class="spec-u"> km/h</span></div><div class="spec-l">max</div></div></div>
+<div class="rv d2" style="display:flex;flex-direction:column;align-items:center;gap:clamp(.2rem,.5vw,.4rem)"><p style="font-size:var(--s);color:var(--rg)">multi-sense</p><div class="modes"><button class="mode act" onclick="sM(this,'eco')">eco</button><button class="mode" onclick="sM(this,'comfort')">comfort</button><button class="mode" onclick="sM(this,'sport')">sport</button><button class="mode" onclick="sM(this,'smart')">smart</button><button class="mode" onclick="sM(this,'perso')">perso</button></div><div class="mdesc" id="mDsc"><span data-pt="Otimiza consumo e eficiência" data-en="Optimizes consumption and efficiency" data-es="Optimiza consumo y eficiencia"></span></div></div>
+<div class="rv d3" style="display:flex;flex-direction:column;align-items:center;gap:.2rem"><p style="font-size:var(--tn);color:var(--rg)">48 <span data-pt="cores ambient lighting" data-en="ambient lighting colors" data-es="colores ambient lighting"></span></p><div class="amb" id="aP"></div></div>
+</div></section>
+
+<!-- S10 ADAS -->
+<section class="slide adas noise" id="s9"><div class="si">
+<div class="sh rv"><span class="sh-n">06. ADAS</span><div class="abadge rv d1">Human First Program — Safety by Renault</div><h2 class="rv d2"><span data-pt="24 sistemas avançados" data-en="24 advanced systems" data-es="24 sistemas avanzados"></span></h2></div>
+<div class="adg">
+<div class="adc tc rv d1" onclick="this.classList.toggle('op')"><div class="ic">&#128663;</div><h4><span data-pt="direção ativa" data-en="active steering" data-es="dirección activa"></span></h4><p><span data-pt="Regula velocidade, mantém distâncias e centraliza na faixa. Quando o tráfego desacelera, o veículo para e reinicia automaticamente." data-en="Regulates speed, maintains distances and keeps centered. When traffic slows, the vehicle stops and restarts automatically." data-es="Regula velocidad, mantiene distancias y centraliza en el carril."></span></p><div class="click-hint"><span data-pt="clique" data-en="click" data-es="clic"></span></div></div>
+<div class="adc tc rv d2" onclick="this.classList.toggle('op')"><div class="ic">&#128161;</div><h4><span data-pt="farol inteligente" data-en="smart headlights" data-es="faros inteligentes"></span></h4><p><span data-pt="Os faróis se ajustam entre alto e baixo dependendo do tráfego que se aproxima ou dos veículos detectados à frente." data-en="Headlights adjust between high and low based on approaching traffic or detected vehicles ahead." data-es="Los faros se ajustan entre altos y bajos según el tráfico detectado."></span></p><div class="click-hint"><span data-pt="clique" data-en="click" data-es="clic"></span></div></div>
+<div class="adc tc rv d3" onclick="this.classList.toggle('op')"><div class="ic">&#128739;</div><h4><span data-pt="permanência em faixa" data-en="lane keeping" data-es="permanencia en carril"></span></h4><p><span data-pt="Avisa sobre possível colisão com veículo na faixa adjacente. Se provável, faz correção de emergência na trajetória." data-en="Warns about possible collision with adjacent lane vehicle. Makes emergency trajectory correction if likely." data-es="Avisa sobre posible colisión con vehículo en carril adyacente. Hace corrección de emergencia."></span></p><div class="click-hint"><span data-pt="clique" data-en="click" data-es="clic"></span></div></div>
+<div class="adc tc rv d4" onclick="this.classList.toggle('op')"><div class="ic">&#128682;</div><h4><span data-pt="saída segura" data-en="safe exit" data-es="salida segura"></span></h4><p><span data-pt="Alerta se um veículo estiver se aproximando por trás quando você quiser abrir a porta." data-en="Alerts if a vehicle is approaching from behind when you want to open the door." data-es="Alerta si un vehículo se acerca por detrás al abrir la puerta."></span></p><div class="click-hint"><span data-pt="clique" data-en="click" data-es="clic"></span></div></div>
+<div class="adc tc rv d5" onclick="this.classList.toggle('op')"><div class="ic">&#127909;</div><h4><span data-pt="câmera 360° 3D" data-en="360° 3D camera" data-es="cámara 360° 3D"></span></h4><p><span data-pt="4 câmeras recriam o ambiente direto do veículo em 360° para manobras sem esforço e com total segurança." data-en="4 cameras recreate the vehicle's surroundings in 360° for effortless, safe maneuvering." data-es="4 cámaras recrean el ambiente en 360° para maniobras sin esfuerzo."></span></p><div class="click-hint"><span data-pt="clique" data-en="click" data-es="clic"></span></div></div>
+<div class="adc tc rv d6" onclick="this.classList.toggle('op')"><div class="ic">&#9888;</div><h4><span data-pt="frenagem automática" data-en="auto braking" data-es="frenado automático"></span></h4><p><span data-pt="A câmera e o sensor de radar fornecem um aviso e intervêm para evitar qualquer colisão com pedestres, ciclistas ou veículos." data-en="Camera and radar sensor warn and intervene to prevent collision with pedestrians, cyclists or vehicles." data-es="Cámara y radar advierten e intervienen para evitar colisión."></span></p><div class="click-hint"><span data-pt="clique" data-en="click" data-es="clic"></span></div></div>
+</div></div></section>
+
+<!-- S11 COLORS -->
+<section class="slide clr" id="s10"><div class="si">
+<div class="sh rv"><span class="sh-n" style="color:#888">07. <span data-pt="customização" data-en="customization" data-es="personalización"></span></span><h2><span data-pt="cores" data-en="colors" data-es="colores"></span></h2></div>
+<div class="cdsp rv d1" id="cD">azul mercure</div>
+<div class="car-img-wrap rv d1"><img id="carColorImg" src="boreal-assets/boreal-3d-side.jpg" alt="Boreal" style="filter:hue-rotate(200deg) saturate(1.2)"></div>
+<div class="cg rv d2">
+<div style="text-align:center"><div class="sw act" style="background:linear-gradient(135deg,#3a8bb5,#2d6e94)" onclick="selC(this,'azul mercure','hue-rotate(200deg) saturate(1.2)')"></div><div class="cn">azul mercure</div></div>
+<div style="text-align:center"><div class="sw" style="background:linear-gradient(135deg,#8a8a8a,#6b6b6b)" onclick="selC(this,'cinza cassiopée','saturate(0) brightness(.7)')"></div><div class="cn">cinza cassiopée</div></div>
+<div style="text-align:center"><div class="sw" style="background:linear-gradient(135deg,#f0f0f0,#ddd);border-color:rgba(0,0,0,.08)" onclick="selC(this,'branco glacier','saturate(0) brightness(1.3)')"></div><div class="cn">branco glacier</div></div>
+<div style="text-align:center"><div class="sw" style="background:linear-gradient(135deg,#c0c0c0,#a0a0a0)" onclick="selC(this,'prata etoile','saturate(0) brightness(.9)')"></div><div class="cn">prata etoile</div></div>
+<div style="text-align:center"><div class="sw" style="background:linear-gradient(135deg,#2a2a2a,#111)" onclick="selC(this,'preto nacré','saturate(0) brightness(.2)')"></div><div class="cn">preto nacré</div></div>
+<div style="text-align:center"><div class="sw" style="background:linear-gradient(135deg,#cc2222,#991111)" onclick="selC(this,'vermelho fogo','hue-rotate(0deg) saturate(2)')"></div><div class="cn">vermelho fogo</div></div>
+</div></div></section>
+
+<!-- S12 VERSIONS -->
+<section class="slide vers noise" id="s11"><div class="si">
+<div class="sh rv"><h2><span data-pt="versões" data-en="versions" data-es="versiones"></span></h2></div>
+<div class="vg">
+<div class="vc tc rv d1"><div class="vb">evolution</div><h3>evolution</h3><ul><li><span data-pt="console premium preto" data-en="black premium console" data-es="consola premium negro"></span></li><li>full LED</li><li><span data-pt='openR 10" espelhamento' data-en='openR 10" mirroring' data-es='openR 10" espejado'></span></li><li><span data-pt="indução" data-en="wireless charging" data-es="carga inalámbrica"></span></li><li><span data-pt='rodas 18" mountain cinza' data-en='18" mountain grey' data-es='rodas 18" mountain gris'></span></li></ul></div>
+<div class="vc tc rv d2"><div class="vb" style="background:#fff;color:#000">techno</div><h3>techno</h3><ul><li><span data-pt="iluminação ambiente" data-en="ambient lighting" data-es="iluminación ambiente"></span></li><li><span data-pt="5 modos condução" data-en="5 driving modes" data-es="5 modos conducción"></span></li><li>Google <span data-pt="integrado" data-en="built-in" data-es="integrado"></span></li><li><span data-pt="bancos elétricos 6 ajustes" data-en="6-way electric seats" data-es="asientos eléctricos 6 ajustes"></span></li><li><span data-pt='rodas 18" mountain preta' data-en='18" mountain black' data-es='rodas 18" mountain negra'></span></li></ul></div>
+<div class="vc tc rv d3" style="border-color:rgba(239,223,0,.12)"><div class="vb">iconic</div><h3>iconic</h3><ul><li><span data-pt="teto solar panorâmico" data-en="panoramic sunroof" data-es="techo solar panorámico"></span></li><li><span data-pt="biton preto nacré" data-en="nacré black biton" data-es="bitono negro nacré"></span></li><li>Harman Kardon 10</li><li><span data-pt="massagem + memória" data-en="massage + memory" data-es="masaje + memoria"></span></li><li><span data-pt='rodas 19" river diamantadas' data-en='19" diamond-cut river' data-es='rodas 19" river diamantadas'></span></li></ul></div>
+</div></div></section>
+
+<!-- S13 ACCESSORIES -->
+<section class="slide acc noise" id="s12"><div class="si">
+<div class="sh rv"><h2><span data-pt="acessórios" data-en="accessories" data-es="accesorios"></span></h2></div>
+<div class="aw rv d1"><div class="at" id="aT">
+<div class="ai tc"><div class="ai-img"><img src="boreal-assets/boreal-3d-top.jpg" alt="YouClip"></div><div class="ai-b"><h4>YouClip — <span data-pt="tablet" data-en="tablet" data-es="tablet"></span></h4><p><span data-pt="Se fixa ao suporte universal YouClip para instalação do tablet." data-en="Attaches to the universal YouClip mount for tablet." data-es="Se fija al soporte universal YouClip para tablet."></span></p></div></div>
+<div class="ai tc"><div class="ai-img"><img src="boreal-assets/boreal-3d-34rear.jpg" alt="3 em 1"></div><div class="ai-b"><h4>YouClip — 3 em 1</h4><p><span data-pt="Lanterna, gancho e suporte para copo em um único acessório." data-en="Flashlight, hook and cup holder in one accessory." data-es="Linterna, gancho y soporte para vaso en un accesorio."></span></p></div></div>
+<div class="ai tc"><div class="ai-img"><img src="boreal-assets/boreal-white-34.jpg" alt="Rack"></div><div class="ai-b"><h4><span data-pt="rack + bicicleta" data-en="rack + bike" data-es="rack + bicicleta"></span></h4><p><span data-pt="Essencial para quem vive uma vida aventureira." data-en="Essential for adventurous living." data-es="Esencial para vida aventurera."></span></p></div></div>
+<div class="ai tc"><div class="ai-img"><img src="boreal-assets/boreal-grey-34.jpg" alt="Tapetes"></div><div class="ai-b"><h4><span data-pt="tapetes + soleiras" data-en="mats + sills" data-es="alfombras + umbrales"></span></h4><p><span data-pt="Qualidade, conforto e estilo." data-en="Quality, comfort and style." data-es="Calidad, confort y estilo."></span></p></div></div>
+</div></div>
+<div class="actr rv d2"><button class="abtn" onclick="mvA(-1)">&larr;</button><div class="adots" id="aD"></div><button class="abtn" onclick="mvA(1)">&rarr;</button></div>
+</div></section>
+
+<!-- S14 CTA -->
+<section class="slide cta noise" id="s13"><canvas id="cC"></canvas><div class="si">
+<svg class="cta-logo rv" viewBox="0 0 80 90" fill="none" width="100" height="110"><path d="M40 0L80 45L40 90L0 45Z" stroke="#fff" stroke-width="2" fill="none"/><path d="M40 12L68 45L40 78L12 45Z" stroke="#fff" stroke-width=".8" fill="none" opacity=".25"/></svg>
+<h2 class="cta-tl rv d1"><span data-pt='Renault Boreal. <em>Para sonhar grande.</em>' data-en='Renault Boreal. <em>Dream big.</em>' data-es='Renault Boreal. <em>Para soñar en grande.</em>'></span></h2>
+<button class="cta-b rv d2" onclick="confetti()"><span data-pt="monte o seu" data-en="build yours" data-es="arme el suyo"></span> &rarr;</button>
+<div class="cta-lnk rv d3"><a href="https://www.renault.com.br/veiculos-de-passeio/boreal.html" target="_blank">renault.com.br</a><a href="#"><span data-pt="configurador" data-en="configurator" data-es="configurador"></span></a></div>
+</div></section>
+
+<script>
+(function(){
+'use strict';
+let L='pt';
+function SL(l){L=l;document.querySelectorAll('.lt button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));document.querySelectorAll('[data-pt]').forEach(el=>{const v=el.getAttribute('data-'+l)||el.getAttribute('data-en')||el.getAttribute('data-pt');if(v.includes('<'))el.innerHTML=v;else el.textContent=v});uSpk()}window.SL=SL;
+function uSpk(){document.querySelectorAll('.spk').forEach(s=>{const lb=s.querySelector('.sl');if(lb)lb.textContent=s.getAttribute(L==='en'?'data-te':L==='es'?'data-ts':'data-t')||s.getAttribute('data-t')})}
+
+/* cursor */
+const cr=document.getElementById('cur'),cd=document.getElementById('cd');let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+function uC(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;if(cr){cr.style.left=cx+'px';cr.style.top=cy+'px'}if(cd){cd.style.left=mx+'px';cd.style.top=my+'px'}requestAnimationFrame(uC)}uC();
+const hs='button,a,.hlc,.adc,.vc,.ap,.sw,.spk,.mode,.nd,.abtn,.fci,.env,.tag,.comp-h,.ai,.ec';
+document.addEventListener('mouseover',e=>{if(e.target.closest(hs)&&cr)cr.classList.add('h')});
+document.addEventListener('mouseout',e=>{if(e.target.closest(hs)&&cr)cr.classList.remove('h')});
+
+/* slides */
+const SS=document.querySelectorAll('.slide');let cS=0,tr=false,ov=false;
+const nd=document.getElementById('nD');SS.forEach((_,i)=>{const d=document.createElement('div');d.className='nd'+(i===0?' a':'');d.onclick=()=>go(i);nd.appendChild(d)});
+function go(i){if(ov)tOv();if(i<0||i>=SS.length||tr)return;tr=true;cS=i;SS[i].scrollIntoView({behavior:'smooth'});document.querySelectorAll('.nd').forEach((d,j)=>d.classList.toggle('a',j===i));document.getElementById('pB').style.width=(i/(SS.length-1))*100+'%';setTimeout(()=>tr=false,800)}window.go=go;
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');const i=[...SS].indexOf(e.target);if(i!==-1){cS=i;document.querySelectorAll('.nd').forEach((d,j)=>d.classList.toggle('a',j===i));document.getElementById('pB').style.width=(i/(SS.length-1))*100+'%';if(i===1)anM();if(i===2)anHL();anCtr(e.target)}}})},{threshold:.45});SS.forEach(s=>obs.observe(s));
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;switch(e.key){case'ArrowRight':case'ArrowDown':case' ':case'PageDown':e.preventDefault();go(cS+1);break;case'ArrowLeft':case'ArrowUp':case'PageUp':e.preventDefault();go(cS-1);break;case'f':case'F':if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen();break;case'o':case'O':tOv();break;case'Escape':if(ov)tOv();if(document.getElementById('appModal').classList.contains('show'))closeModal();break}});
+let ty=0;document.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});document.addEventListener('touchend',e=>{const d=ty-e.changedTouches[0].clientY;if(Math.abs(d)>50)go(cS+(d>0?1:-1))},{passive:true});
+let wt=null;document.addEventListener('wheel',e=>{if(ov||wt)return;wt=setTimeout(()=>wt=null,950);if(e.deltaY>25)go(cS+1);else if(e.deltaY<-25)go(cS-1)},{passive:true});
+function tOv(){ov=!ov;document.body.classList.toggle('ov',ov);if(ov)SS.forEach((s,i)=>{s.onclick=()=>go(i)});else SS.forEach(s=>s.onclick=null)}
+
+/* parallax + tilt */
+document.addEventListener('mousemove',e=>{const px=(e.clientX/innerWidth-.5),py=(e.clientY/innerHeight-.5);document.querySelectorAll('[data-plx]').forEach(el=>{const sp=parseFloat(el.dataset.plx);el.style.transform=`translate(${px*sp*100}px,${py*sp*100}px)`});document.querySelectorAll('.tc').forEach(c=>{const r=c.getBoundingClientRect();if(e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom){const cx2=(e.clientX-r.left)/r.width-.5,cy2=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(600px) rotateY(${cx2*10}deg) rotateX(${-cy2*10}deg) translateY(-4px)`;c.style.boxShadow=`${cx2*-12}px ${cy2*12+8}px 30px rgba(0,0,0,.3)`}})});
+document.querySelectorAll('.tc').forEach(c=>{c.addEventListener('mouseleave',()=>{c.style.transform='';c.style.boxShadow=''})});
+
+/* hero typewriter */
+const tw=document.getElementById('tw');let ti=0;const tT='BOREAL';function tH(){if(ti<=tT.length){tw.textContent=tT.substring(0,ti);ti++;setTimeout(tH,140)}else tw.style.borderRight='none'}setTimeout(tH,1100);
+
+/* hero particles */
+const hc=document.getElementById('hP');if(hc){const ctx=hc.getContext('2d');let pts=[];function rH(){hc.width=innerWidth;hc.height=innerHeight}rH();addEventListener('resize',rH);class P{constructor(){this.r()}r(){this.x=Math.random()*hc.width;this.y=Math.random()*hc.height;this.s=Math.random()*1.5+.5;this.vx=(Math.random()-.5)*.2;this.vy=(Math.random()-.5)*.2;this.o=Math.random()*.25+.05}u(){this.x+=this.vx;this.y+=this.vy;const dx=mx-this.x,dy=my-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){this.x-=dx*.008;this.y-=dy*.008}if(this.x<0||this.x>hc.width||this.y<0||this.y>hc.height)this.r()}d(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(239,223,0,${this.o})`;ctx.fill()}}for(let i=0;i<Math.min(50,innerWidth/25);i++)pts.push(new P);function aP(){ctx.clearRect(0,0,hc.width,hc.height);pts.forEach(p=>{p.u();p.d()});for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<110){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(239,223,0,${.05*(1-d/110)})`;ctx.lineWidth=.5;ctx.stroke()}}requestAnimationFrame(aP)}aP()}
+
+/* manifesto */
+let mA=false;function anM(){if(mA)return;mA=true;const el=document.querySelector('#mT span');const t=el.getAttribute('data-'+L)||el.getAttribute('data-pt');el.innerHTML=t.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');el.querySelectorAll('.w').forEach((w,i)=>setTimeout(()=>w.classList.add('v'),i*90+150))}
+
+/* highlights */
+function anHL(){document.querySelectorAll('.hlc.hid').forEach((c,i)=>setTimeout(()=>c.classList.remove('hid'),i*110))}
+
+/* counters */
+const ctd=new Set();function anCtr(sl){if(ctd.has(sl.id))return;const cs=sl.querySelectorAll('.ctr');if(!cs.length)return;ctd.add(sl.id);cs.forEach(c=>{const tg=+c.dataset.target,st=performance.now();function u(n){const p=Math.min((n-st)/2000,1);c.textContent=Math.round(tg*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(u)}requestAnimationFrame(u)})}
+
+/* speakers */
+const spks=document.querySelectorAll('.spk');
+spks.forEach(s=>s.addEventListener('click',()=>{spks.forEach(x=>x.classList.remove('act'));s.classList.add('act');const k=L==='en'?'data-te':L==='es'?'data-ts':'data-t';const t=s.getAttribute(k)||s.getAttribute('data-t');const ds={'médios':'Frequências médias — voz e instrumentos','agudos':'Altas frequências — detalhes e brilho','graves':'Baixas frequências — corpo e profundidade','subgraves':'Ultra-baixas — impacto e vibração','mids':'Mid frequencies — voice and instruments','tweeters':'High frequencies — detail and brightness','woofers':'Low frequencies — body and depth','subwoofer':'Ultra-low — impact and vibration','medios':'Frecuencias medias — voz e instrumentos'};document.getElementById('sI').innerHTML=`<h4>${t}</h4><p style="color:var(--rg)">${ds[t]||t}</p>`}));
+window.setEnv=function(btn,ids){document.querySelectorAll('.env').forEach(b=>b.classList.remove('act'));btn.classList.add('act');const active=ids?ids.split(',').map(Number):[];spks.forEach((s,i)=>{s.classList.remove('act','dim');if(active.length===0)s.classList.add('dim');else if(active.includes(i))s.classList.add('act');else s.classList.add('dim')})};
+
+/* app modal */
+window.openApp=function(icon,name,pt,en,es){const m=document.getElementById('appModal');document.getElementById('mIcon').innerHTML=icon;document.getElementById('mName').textContent=name;document.getElementById('mDesc').textContent=L==='en'?en:L==='es'?es:pt;m.classList.add('show')};
+window.closeModal=function(){document.getElementById('appModal').classList.remove('show')};
+
+/* comparison slider */
+const comp=document.getElementById('comp'),cH=document.getElementById('cH');
+if(comp&&cH){let dr=false;function sS(x){const r=comp.getBoundingClientRect();const p=Math.max(5,Math.min(95,((x-r.left)/r.width)*100));comp.style.setProperty('--sp',p+'%');cH.style.left=p+'%'}
+comp.addEventListener('mousedown',e=>{dr=true;sS(e.clientX)});document.addEventListener('mousemove',e=>{if(dr)sS(e.clientX)});document.addEventListener('mouseup',()=>dr=false);
+comp.addEventListener('touchstart',e=>{dr=true;sS(e.touches[0].clientX)},{passive:true});comp.addEventListener('touchmove',e=>{if(dr)sS(e.touches[0].clientX)},{passive:true});comp.addEventListener('touchend',()=>dr=false,{passive:true})}
+
+/* modes */
+const mDs={eco:{pt:'Otimiza consumo e eficiência energética',en:'Optimizes fuel consumption and efficiency',es:'Optimiza consumo y eficiencia energética'},comfort:{pt:'Suspensão suave e direção leve',en:'Smooth suspension and light steering',es:'Suspensión suave y dirección ligera'},sport:{pt:'Direção e aceleração otimizadas',en:'Optimized steering and acceleration',es:'Dirección y aceleración optimizadas'},smart:{pt:'Adapta ao seu estilo de direção',en:'Adapts to your driving style',es:'Se adapta a su estilo de conducción'},perso:{pt:'Personalize cada parâmetro',en:'Customize each parameter',es:'Personalice cada parámetro'}};
+window.sM=function(b,m){document.querySelectorAll('.mode').forEach(x=>x.classList.remove('act'));b.classList.add('act');document.getElementById('mDsc').textContent=mDs[m][L]||mDs[m].pt};
+
+/* ambient */
+const ap=document.getElementById('aP');if(ap){for(let i=0;i<48;i++){const d=document.createElement('div');d.className='ac';d.style.background=`hsl(${(i/48)*360},65%,52%)`;ap.appendChild(d)}}
+
+/* colors */
+window.selC=function(el,n,f){document.querySelectorAll('.sw').forEach(s=>s.classList.remove('act'));el.classList.add('act');document.getElementById('cD').textContent=n;document.getElementById('carColorImg').style.filter=f};
+
+/* acc carousel */
+const aT=document.getElementById('aT'),aIs=aT?aT.querySelectorAll('.ai'):[];let aP2=0;
+function gV(){return innerWidth<550?1:2}
+function uA(){if(!aT||!aIs.length)return;const pv=gV();aP2=Math.max(0,Math.min(aP2,aIs.length-pv));const w=aIs[0].offsetWidth+parseFloat(getComputedStyle(aT).gap||16);aT.style.transform=`translateX(-${aP2*w}px)`;const ds=document.getElementById('aD');if(ds){ds.innerHTML='';for(let i=0;i<=aIs.length-pv;i++){const d=document.createElement('div');d.className='adot'+(i===aP2?' act':'');d.onclick=()=>{aP2=i;uA()};ds.appendChild(d)}}}
+window.mvA=function(d){aP2+=d;uA()};uA();addEventListener('resize',uA);
+
+/* confetti */
+window.confetti=function(){const cv=document.getElementById('cC');if(!cv)return;const ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const cols=['#EFDF00','#fff','#FFD700','#FFF8DC'];let cs=[];for(let i=0;i<130;i++)cs.push({x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2,vx:(Math.random()-.5)*16,vy:Math.random()*-20-5,w:Math.random()*9+4,h:Math.random()*5+2,c:cols[~~(Math.random()*cols.length)],r:Math.random()*360,rv:(Math.random()-.5)*12,g:.32+Math.random()*.2});let f=0;function dr(){ctx.clearRect(0,0,cv.width,cv.height);cs.forEach(c=>{c.x+=c.vx;c.y+=c.vy;c.vy+=c.g;c.r+=c.rv;c.vx*=.99;ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.r*Math.PI/180);ctx.fillStyle=c.c;ctx.fillRect(-c.w/2,-c.h/2,c.w,c.h);ctx.restore()});f++;if(f<200)requestAnimationFrame(dr);else ctx.clearRect(0,0,cv.width,cv.height)}dr()};
+
+SS[0].classList.add('vis');SL('pt');
+})();
+</script>
+</body>
+</html>
